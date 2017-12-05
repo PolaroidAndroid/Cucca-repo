@@ -5,5 +5,8 @@
 
 #faccio modelli ----
 
-source() #
+source() #con questo comando richiamo altri script
+
+
+
 
