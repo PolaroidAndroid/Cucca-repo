@@ -1,16 +1,19 @@
-pm10<-read.csv2("pm2010.csv",dec=".")
+pm10<-read.csv2("data/pm2010.csv",dec=".")
+
+
+install.packages("tidyverse")
 
 library(tidyr)
-pm10_a<-separate(pm10,col="data",into = c("anno","mese","giorno"),sep="-")
+pm10_a <- separate(pm10, col="data", into = c("anno","mese","giorno"), sep="-")
 
-pm10_a$mese2<-as.numeric(pm10_a$mese)
+pm10_a$mese2 <- as.numeric(pm10_a$mese)
 
 str(pm10_a)        
 
 pm10_a$mese2
 
 
-pm10_a$giorno2<-as.numeric(pm10_a$giorno)
+pm10_a$giorno2 <- as.numeric(pm10_a$giorno)
 str(pm10_a)
 # stagioni: primavera (21-03 / 20-06), estate (21-06/22-09), autunno (23-09 /21-12)
 # inverno(22-12/20-03)
@@ -40,7 +43,7 @@ table(pm10_a$Stagione)
 
 summary(pm10_a)
 require(ade4)
-pca1<-dudi.pca(deug$tab,scal=FALSE,center=deug$cent,scan=FALSE,nf=2
+pca1<-dudi.pca(deug$tab,scal=FALSE,center=deug$cent,scan=FALSE,nf=2)
 pcapm<-dudi.pca(pm10_a[,-10],scal=FALSE,center=TRUE,scan=FALSE,nf=2)
 scatter(pcapm$eig)
 
