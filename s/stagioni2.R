@@ -135,7 +135,7 @@ s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3,col=c(1,2,3,4))
 
 
 
-# hillssmith su dati
+#### HILLSMITH SU DATI ----
 
 data_hills<-(pm10_a[,1:10])
 data_hills$stagione<-pm10_a$Stagione
@@ -168,4 +168,8 @@ cumsum(dd1$eig/sum(dd1$eig))
 # fa un pò come gli pare e la velocità del vento va per cazzi suoi
 # d'inverno la situazione è opposta all'estate e nelle stagioni di 
 # mezzo la situazione è mista.... che cazzo gli chiedo ai miei dati?
+
+##### CHE CE FACCIO CO STI DATI?!?!?! ----
+
+
 
