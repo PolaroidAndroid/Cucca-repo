@@ -55,8 +55,9 @@ data_pca <- pm10_a[,c(1:9)]
 # con nf = 3 gli stò dicendo di tenere tre assi
 pcapm<-dudi.pca(data_pca,scannf = FALSE, nf = 3)
 
-#faccio il biplot
+#faccio il biplot, cos'è clab.row?
 scatter(pcapm, clab.row = 0.5)
+
 
 #valori dei punteggi per le variabili
 pcapm$c1
@@ -68,6 +69,7 @@ pcapm$c1
 # sulla terza si prende tutto il vento
 
 #cerchio di correlazione, i punteggi delle varibili sono plottati su una circonferenza di raggio unitario
+par(mfrow=c(2,2))
 s.corcircle(pcapm$c1, xax = 1, yax = 2) #plotto prima e seconda
 s.corcircle(pcapm$c1, xax = 1, yax = 3) #plotto prima e terza
 s.corcircle(pcapm$c1, xax = 2, yax = 3) #plotto seconda e terza
@@ -80,7 +82,9 @@ cumsum(pcapm$eig/sum(pcapm$eig)) # con i primi tre assi spiego circa il 70% che 
 
 #vediamo adesso come si comportano le variabili qualitative - lascio a te l'interpretazione!!!!!!
 # STAGIONE
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2)
+par(mfrow=c(1,1))
+par(mfrow=c(2,2))
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2,col=rainbow)
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3)
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3)
 
