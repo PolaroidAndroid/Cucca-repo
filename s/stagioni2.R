@@ -80,28 +80,92 @@ pcapm$eig/sum(pcapm$eig)
 #calcolo la somma cumilata degli autovalori
 cumsum(pcapm$eig/sum(pcapm$eig)) # con i primi tre assi spiego circa il 70% che non è male
 
+
+# da cosa lo capisci??? perchè il 3° dice 0.71?
+
+
+
 #vediamo adesso come si comportano le variabili qualitative - lascio a te l'interpretazione!!!!!!
 # STAGIONE
 par(mfrow=c(1,1))
 par(mfrow=c(2,2))
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2,col=rainbow)
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3)
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3)
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2,col=c(1,2,3,4)) 
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3,col=c(1,2,3,4))
 
+
+
+X11()
+par(mfrow=c(2,2))
 #MESE
-s.class(pcapm$li, factor(pm10_a$mese), xax = 1, yax = 2)
-s.class(pcapm$li, factor(pm10_a$mese), xax = 1, yax = 3)
-s.class(pcapm$li, factor(pm10_a$mese), xax = 2, yax = 3)
+
+
+
+s.class(pcapm$li, factor(pm10_a$mese), xax = 1, yax = 2,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$mese), xax = 1, yax = 3,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$mese), xax = 2, yax = 3,col=c(1,2,3,4))
+
+s.class(pcapm$li, factor(pm10_a$mese), xax = 1, yax = 2,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$mese), xax = 1, yax = 3,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$mese), xax = 2, yax = 3,col=c(1,2,3,4))
 
 # PROVA A FARLO ANCHE CON IL GIORNO E LA DIREZIONE DEL VENTO E PROVA A METTERE COLORI DIVERSI
 
 
-str(pm10_a)
-pm10_a$giorno<-as.factor(pm10_a$giorno)
-pm10_a$mese<-as.factor(pm10_a$mese)
-pm10_a$anno<-as.factor(pm10_a$anno)
-pm10_a$Stagione<-as.factor(pm10_a$Stagione)
+s.class(pcapm$li, factor(pm10_a$giorno), xax = 1, yax = 2,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$giorno), xax = 1, yax = 3,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$giorno), xax = 2, yax = 3,col=c(1,2,3,4))
+
+# mi sembra chiaro che in estate ed inverno (sia per giorno,mese,stagione)
+# sono opposti, quindi i dati sono inversi, e che invece autunno ed inverno
+# che sono le stagioni di mezzo la situazione è sovrapposta, non essendoci
+# estremi... sbaglio o in inverno ci sono dei brutti picchi???
+
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3,col=c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3,col=c(1,2,3,4))
 
 
-dd1 <- dudi.hillsmith(pm10_a, scann = FALSE)
-scatter(dd1)
+# il vento da nord ovest è attaccato all'asse y, mentre quello da
+# nord est è attaccato all'asse x nella seconda s class, ma lo fa 
+# anche nella terza... non capisco perchè stanno tutti al centro uno
+# sull'altro sti scemi.
+
+
+
+
+
+# hillssmith su dati
+
+data_hills<-(pm10_a[,1:10])
+data_hills$stagione<-pm10_a$Stagione
+str(data_hills)
+data_hills$stagione<-as.factor(data_hills$stagione)
+dd1<-dudi.hillsmith(data_hills,scannf = FALSE,nf=3)
+par(mfrow=c(1,1))
+
+scatter(dd1,clab.row=0.5)
+# perchè lo scatter sta a fanculo in alto?
+
+dd1$c1
+
+par(mfrow=c(1,1))
+s.corcircle(dd1$c1, xax = 1, yax = 2) #plotto prima e seconda
+s.corcircle(dd1$c1, xax = 1, yax = 3) #plotto prima e terza
+s.corcircle(dd1$c1, xax = 2, yax = 3) #plotto seconda e terza
+
+
+dd1$eig/sum(dd1$eig) 
+cumsum(dd1$eig/sum(dd1$eig))
+
+
+# quindi aggiungendo le qualitative e facendo la hills 
+# i 3 assi mi perdono di dati??? e spiegano quasi il 50% dei dati?
+
+# ma sopratutto ora che so che:
+# media mediana e max pesano un botto e sono super correlate
+# tmp,rdz,prs sono inversamente prop all'umidità e che la pioggia 
+# fa un pò come gli pare e la velocità del vento va per cazzi suoi
+# d'inverno la situazione è opposta all'estate e nelle stagioni di 
+# mezzo la situazione è mista.... che cazzo gli chiedo ai miei dati?
+
