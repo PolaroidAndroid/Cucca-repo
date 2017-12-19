@@ -171,5 +171,24 @@ cumsum(dd1$eig/sum(dd1$eig))
 
 ##### CHE CE FACCIO CO STI DATI?!?!?! ----
 
+# provo a vedere sta velocità del vento che problemi ha 
 
 
+hist(pm10_a$vv)
+
+plot(pm10_a$media~pm10_a$vv,col="2",pch="20")
+boxplot(pm10_a$vv)
+
+#faccio un modello di regressione multipla con tutto dentro
+modvv<-lm(vv~.,data=data_hills)
+summary(modvv)
+# la vv del vento con la direzione nord fa sempre vedere qualcosa
+# per me c'è qualcosa sotto, dice che sono significative 
+# umr,pgg,prs
+
+
+
+
+
+modvv1<-lm(,data=data_hills)
+summary(modvv1)
