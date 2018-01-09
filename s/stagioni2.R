@@ -94,7 +94,6 @@ cumsum(pcapm$eig / sum(pcapm$eig)) # con i primi tre assi spiego circa il 70% ch
 #vediamo adesso come si comportano le variabili qualitative - lascio a te l'interpretazione!!!!!!
 # PCA STAGIONE ----
 par(mfrow= c(1,1))
-par(mfrow = c(2,2))
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2, col = c(1,2,3,4)) 
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3, col = c(1,2,3,4))
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = c(1,2,3,4))
@@ -135,6 +134,11 @@ col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_co
 # 4) l'asse maggiore è parallelo alla componente che rappresenta la concentrazione
 # 5) essendo così tutte attaccate mi sa che il fattore stagione posso anche non cagarlo
 # posso invece indagare su st'inverno che esce fuori dagli schemi no??
+
+
+
+
+
 
 # attenta mese ha 12 livelli come factor non 4 come le stagioni se usi solo 4 colori non vedi gli altri mesi
 # approfitto per usare la funzione che hai usato prima 

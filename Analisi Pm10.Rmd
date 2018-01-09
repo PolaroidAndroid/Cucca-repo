@@ -1,0 +1,380 @@
+---
+title: "Analisi PM10"
+author: "Stefano e Cucca"
+output: pdf_document
+---
+
+Questo è un file r Markdown che permette di editare file di varia natura (PDF, Presentazioni di slide, pagine HTML, App) direttamente in un ambiente misto con linee di testo e linee di codice. Sotta "Help" trovi la voce "Markdown Quick Reference" e altre cose utili ma su internet ci sono pagine e pagine che ti spiegano come usarlo.
+
+
+Qui sotto trovi un "chunk" di codice (tasto rapido ctrl+alt+i per inserirla) dove puoi scrivere i codici in r.
+Per far girare un codice funziona come uno script normale. Mentre se premi il tastino verde a destra ti runna tutto quello che sta in quella chunk.
+
+```{r}
+
+```
+
+Poi magari ci mettiamo una volta su skype e ti spiego un po meglio ma intanto i commenti te li metto qui che è più comodo.
+
+
+```{r, include=FALSE}
+#setto la WD ----
+pm10 <- read.csv2("data/pm2010.csv", dec = ".")
+
+#questo è un pacchetto di pacchetti. Contiene molti pacchetti utili :-)
+
+library(tidyr)
+#creO variabile per anno, giorno, mese
+pm10_a <- separate(pm10, col = "data", into = c("anno","mese","giorno"), sep = "-")
+
+pm10_a$mese2 <- as.numeric(pm10_a$mese)
+
+str(pm10_a)        
+
+pm10_a$mese2
+
+
+pm10_a$giorno2 <- as.numeric(pm10_a$giorno)
+str(pm10_a)
+# stagioni: primavera (21-03 / 20-06), estate (21-06/22-09), autunno (23-09 /21-12)
+# inverno(22-12/20-03)
+
+#divido in stagioni ----
+getSeason <- function(DATES) {
+  WS <- as.Date("2010-12-22", format = "%Y-%m-%d") # Winter Solstice
+  SE <- as.Date("2010-3-21",  format = "%Y-%m-%d") # Spring Equinox
+  SS <- as.Date("2010-6-21",  format = "%Y-%m-%d") # Summer Solstice
+  FE <- as.Date("2010-9-23",  format = "%Y-%m-%d") # Fall Equinox
+  d <- as.Date(strftime(DATES, format="2010-%m-%d"))
+  
+  ifelse (d >= WS | d < SE, "Winter",
+          ifelse (d >= SE & d < SS, "Spring",
+                  ifelse (d >= SS & d < FE, "Summer", "Fall")))
+}
+
+
+k <- getSeason(pm10$data)
+
+
+
+pm10_a$Stagione<- k
+
+table(pm10_a$Stagione)
+
+
+summary(pm10_a)
+```
+
+
+### PCA Analysis (con gli # crei i titoli con una scala gerarchica # ## ### #### ##### etc..). Guardati anche le cheatsheets sull'Help  
+
+
+```{r}
+### PCA ANALYSIS ----
+require(ade4)
+names(pm10_a)
+
+#estraggo da pm10 solo le variabili numeriche da inserire nella PCA escludendo giorno mese e anno che sono da considerarsi factors
+data_pca <- pm10_a[,c(1:9)]
+
+# con nf = 3 gli stò dicendo di tenere tre assi
+pcapm <- dudi.pca(data_pca, scannf = FALSE, nf = 3)
+
+#faccio il biplot, cos'è clab.row?
+# clab.row serve a gestire la grandezza dei quadratini delle osservazioni
+# clab.col invece controlla le variabili
+scatter(pcapm, clab.row = 0.5)
+
+#valori dei punteggi per le variabili
+pcapm$c1
+```
+
+
+# CARATTERIZZIAMO GLI ASSI
+se vedi come ci si aspetta mediana media e max stanno insieme perchè sono molto correlati e vanno tutti sulla prima componente
+sulla seconda ci vanno i fattori ambientali tmp, umr, rdz, pgg e prs. Solo che tmp, prs e rdz hanno correlazione negativa rispetto a umr  e pgg [pgg è al limite. ha un punteggio abbastanza basso] sulla terza si prende tutto il vento.
+
+```{r}
+#cerchio di correlazione, i punteggi delle varibili sono plottati su una circonferenza di raggio unitario
+par(mfrow = c(2,2))
+s.corcircle(pcapm$c1, xax = 1, yax = 2) #plotto prima e seconda
+s.corcircle(pcapm$c1, xax = 1, yax = 3) #plotto prima e terza
+s.corcircle(pcapm$c1, xax = 2, yax = 3) #plotto seconda e terza
+```
+
+# **Autovalori**
+
+```{r}
+#calcolo gli autovalori
+pcapm$eig / sum(pcapm$eig) 
+
+#calcolo la somma cumilata degli autovalori
+cumsum(pcapm$eig / sum(pcapm$eig)) # con i primi tre assi spiego circa il 70% che non è male
+```
+
+da cosa lo capisci??? perchè il 3° dice 0.71?
+gli autovalori corrispondono alla quantità di variabilità spiegata lungo quella direzione (autovettore) se divido ogni singolo autovalore per la somma di tutti gli autovalori (riga 80) ottengo la % che ogni singola componente spiega. Facendo la somma cumulata (riga 83) non faccio altro che: 1c , 1c + 2c, 1c + 2c + 3c. La somma di tutte chiaramente mi darà 100 (o meglio 1) quindi in questo modo io so che tenedo le prime tre componenti io riesco a vedere il 71% dell'informazione presente nel mio dataset.
+
+
+## Stagione
+
+```{r}
+#vediamo adesso come si comportano le variabili qualitative - lascio a te l'interpretazione!!!!!!
+# PCA STAGIONE ----
+par(mfrow= c(1,1))
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2, col = c(1,2,3,4)) 
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3, col = c(1,2,3,4))
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = c(1,2,3,4))
+
+
+
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = rainbow(4)) #se volessi usare la funzione rainbow
+
+#un modo carino per selezionare i colori
+color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+
+# questo comando crea un oggetto che si chiama color che contiene tutti e 433 i colori base di R escluse le scale di grigio
+# poi basta fare col = sample(color, n) all'intero di una funzione che usa come argument col
+# dove n è il numero di colori che devi utilizzare
+
+#alternativa se 433 colori sono troppi
+library(RColorBrewer)
+qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+# questa funzione produce un vettore di 74 colori
+```
+
+Interpretazione (la devi fare tu), stai attenta! :
+
+- 1 - come si dispongono le ellissi rispetto alle tre componenti? 
+- 2 - ci sono delle direzioni in cui la variazione è più evodente e altre invece dove non sembra esserci?
+- 3 - cosa rappresentano le tre componenti?
+- 4 - l'asse maggiore delle ellissi su che componente si allinea?
+- 5 - che cosa mi racconta quindi il grafico?
+
+facile dire la devi fare tu gne gne gne gne XD alloraaaa( sto rosicando che l'avevo già fatta ma cambiando computer ho fatto un panico... dunque) rispondo alle domande per stagioni:
+
+1) le ellissi praticamente si sovrappongono rispetto alle componenti, in particolare le componenti 1 e 3 , mentre sono trasversali tra 1 e 2 
+2) se per variazione intendi i picchi, in inverno c'è variazione
+3) le tre componenti sono la 1a la concentrazione del pm10 la 2a le variabili ambientali, la 3a la velocità del vento
+4) l'asse maggiore è parallelo alla componente che rappresenta la concentrazione
+5) essendo così tutte attaccate mi sa che il fattore stagione posso anche non cagarlo posso invece indagare su st'inverno che esce fuori dagli schemi no??
+
+# SPIEGONE STAGIONE 
+Primo piano fattoriale comp 1-2: le ellissi si dispongono trasversalmente. Tuttavia cosa si nota:
+- sembrerebbe esserci una maggiore variazione sulla direzione della seconda componente rispetto alla prima. Il che significa che c'è una certa variazione dei fattori ambientali durante l'anno (come ci aspettiamo), temperatura , radiazione solare e pressione elevate in estate e invece umidità e forse precipitazioni (ha punteggio basso) elevate in inverno. 
+- in termini di concentrazione di pm10 c'è una variazione ma sembrerebbe essere inferiore rispetto a quelle delle variabili ambientali. Tuttavia, l'asse maggiore delle ellissi per autunno e inverno è lungo la direzione della prima componente il che indica che in quei mesi c'è una maggiore varibilità ma in termini di media stagionale sono identici.
+- La primavera è praticamente un cerchio il cui centro combacia con il centro del piano fattoriale indicando che le condizioni corrispondono alla media del sistema. 
+
+Con la PCA non stai cercando risposte stai semplicemente osservano che informazioni sono contenute nei tuoi dati. Le ellissi non sono poi così sovrapposte e il fattore stagionale in termini di conc di pm10 e fattori ambientali è piuttosto evidente. Per quanto rigarda il vento sembrerebbe essere maggiore solo in inverno il che corrisponde ad una conc più bassa di pm10 (come ci aspettiamo perchè il vento sparge i pm10 mentre la pioggia li fa depositare a terra). L'inverno non esce dagli schemi ma semplicemente sembra mostrare una maggiore variabilità (cosa del tutto naturale).
+
+```{r}
+#DIREZIONE DEL VENTO ----
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2, col = sample(col_vector, nlevels(pm10$dv)))
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = sample(col_vector, nlevels(pm10$dv)))
+s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = sample(col_vector, nlevels(pm10$dv)))
+
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2, col = rainbow(nlevels(pm10$dv)),clabel = .8)
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = rainbow(nlevels(pm10$dv)))
+s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = rainbow(nlevels(pm10$dv)))
+# ARI-DOMANDE
+# 1) le ellissi sono sempre accozzagliate l'una sull'altra rispetto alle componenti
+# 2) mi sembra che il vento da sudest ha sempre sti picchi malefici che escono dagli schemi
+# 3) le componenti sono sempre le stesse
+# 4) l'asse maggiore sta sempre sulla concentrazione di pm10
+# 5) anche qui stanno tutte una sull'altra non ci sta niente di "eclatante" apparte i picchi di vento 
+# da sudest
+
+# fatti le stesse domande che ti ho scritto prima
+```
+
+
+Sui venti c'è un po' di casino ma qualcosa si nota:
+- i venti da SE hanno una variabilità estrema in termini di pm10 e fattori ambientali 
+- i venti da NW sono i più intensi ma non sembrano corrispondere ad una riduzione di conc di pm10.
+
+
+# HillSmith
+
+```{r}
+#### HILLSMITH SU DATI ----
+
+data_hills<-(pm10_a[,1:10])
+data_hills$stagione<-pm10_a$Stagione
+
+
+str(data_hills)
+data_hills$stagione<-as.factor(data_hills$stagione)
+dd1 <- dudi.hillsmith(data_hills, scannf = FALSE, nf = 3)
+par(mfrow = c(1,1))
+
+scatter(dd1, clab.row = 0.5, posieig = "bottom")
+
+# perchè lo scatter sta a fanculo in alto?
+# stavi pensando a cosa rappresentano i valori della hills e quali sono le 
+# componenti principali in questo caso...
+dd1$c1
+
+par(mfrow=c(1,1))
+s.corcircle(dd1$c1, xax = 1, yax = 2) #plotto prima e seconda
+s.corcircle(dd1$c1, xax = 1, yax = 3) #plotto prima e terza
+s.corcircle(dd1$c1, xax = 2, yax = 3) #plotto seconda e terza
+
+
+dd1$eig/sum(dd1$eig) 
+cumsum(dd1$eig/sum(dd1$eig))
+
+
+# quindi aggiungendo la stagione  e la dv e facendo la hills 
+# i 3 assi mi perdono quantità di informazione e spiegano quasi il 50% dei dati.
+
+
+# ma sopratutto ora che so che:
+# media mediana e max sono super correlate, quindi mi conviene tenerne una sola
+# tmp,rdz,prs sono inversamente prop all'umidità e che la pioggia sta a se
+#velocità del vento va per fatti suoi e tira i miei dati
+# d'inverno ho dei picchi particolari che non so se hanno valenza
+# e mi sembra che la direzione NW può avere una valenza 
+
+```
+
+
+La hillsmith è chiaramente più incasinata e vedi meno (42% rispetto al 71%). Io lascerei la PCA normale e basta poi vedete voi.
+[I venti da SE sembrano interessanti sono molto correlati alla concentrazione di pm10]
+
+
+```{r}
+# provo a vedere sta velocità del vento che problemi ha 
+
+
+hist(pm10_a$vv)
+
+
+# sembrerebbe non esserci correlazione
+
+plot(pm10_a$media~pm10_a$vv,col = "red", pch = 20)
+# sembrerebbe non esserci correlazione
+boxplot(pm10_a$vv)
+
+#faccio un modello di regressione multipla con tutto dentro
+modvv<-lm(vv~.,data=data_hills)
+summary(modvv)
+# la vv del vento con la direzione nord fa sempre vedere qualcosa
+# per me c'è qualcosa sotto, dice che sono significative 
+# umr,pgg,prs
+
+# Questo modello così non va. C'è multicollinearità tra le varie conc di pm10.
+
+modvv2 <- lm(vv~ media + tmp + umr + pgg + rdz + prs, data = data_hills)
+summary(modvv2)
+
+# hai un R^2 molto basso. La relazione potrebbe non essere lineare o semplicemente la velocità del vento dipende da tante cose.
+par(mfrow=c(2,2))
+plot(modvv2)
+
+names(data_hills)
+
+corr <- cor(data_hills[,1:9])
+corr
+```
+
+
+Quello che ti interessa a te è indagare cosa regola la conc di pm10
+
+# REGRESSIONE MULTIPLA
+
+```{r}
+
+
+mod1<-lm(media~.,data=data_hills)
+
+summary(mod1)
+# non capisco perchè è sparito l'autunno cmq dalle stagioni
+AIC(mod1)
+# dal risultato del modello mi sembra che ovviamente hanno rilevanza mediana e 
+# massima che si accavallano sempre con l'intercetta che è la media
+# sbaglio o la direzione del vento N-NW ha rilevanza?, e poi l'R2 è un sacco alto
+# ma l'AIC è altissimo quindi questo modello non spiega assolutamente nulla ahaha
+```
+
+
+
+Anche qui non puoi usare media, mediana e max insieme. Vendono chiaramente significative e ti alzano l'R^2 producendo un overfit
+L'autunno non è sparito ma è finito nell'intercetta come "corner point". Se inserisci una variabile "Dummy" (Qualitativa) in un modello R sceglie automaticamente i primo livello in ordine alpha numerico come corner point. Vuol dire che stai confrontando la variazione dei pm10 in autunno rispetto alle altre variabili e stagioni. L'AIC è un criterio di verosimiglianza che serve a confrontare modelli tra loro. Non importa se sia alto o basso, quello dipende dalla quantità di variabilità presente nel modello. Tu devi "teoricamente" ricercare il modello che abbia l'AIC più basso possibile ma sempre confrontandolo con gli altri modelli che hai fatto. E' esattamente ciò che fa la stepwise.
+
+```{r}
+
+#prima di fare la stepwise elimina mediana e max
+data_hills2 <- data_hills[c(1,4:11)]
+
+mod1 <- lm(media~., data = data_hills2) 
+summary(mod1)
+
+mod1s <- step(mod1, direction = "both")
+summary(mod1s)
+
+# a giudicare da questo credo che eliminerò max e mediana e provo a comparare 
+# max e media con due modelli differenti in quanto sono sempre correlate e vedo
+# se cambia qualcosa 
+
+
+mod2 <- lm(media ~ tmp + vv + dv + rdz + pgg + umr + prs + stagione, data = data_hills)
+mod2bis <- lm(media ~ tmp + vv + rdz + pgg + umr + prs, data = data_hills)
+summary(mod2)
+summary(mod2bis)
+```
+
+La stepwise serve a selezionare le variabili che spiegano di più. Chiaramente mettendo sia dv che stagione stai aggiungendo tanta carne al fuoco e hai poche osservazioni per alcune direzioni. Vediamo un attimino come si comporta
+
+```{r}
+reg1 <- lm(media ~ dv, data = data_hills)
+summary(reg1)
+```
+
+l'unico vento che risulta significativo e manco tanto è SE che sembra incrementare la quantità di pm10 media.
+In fondo hai sfagiolato un po' e magari poi ne parliamo un po' a voce che ho visto un po' di confusione in giro. Non puoi usare i glm in quel modo e per i tuoi dati i glm non servono.
+
+TI SEI DIMENTICATA L'ANALISI DEI RESIDUI! 
+
+
+
+```{r}
+reg2 <- lm(media ~ stagione, data = data_hills)
+summary(reg2)
+
+#così cambi il corner point
+type2 <- relevel(data_hills2$stagione, ref = "Summer")
+
+reg2.bis <- lm(media ~ type2, data = data_hills)
+summary(reg2.bis)
+
+```
+
+
+```{r}
+library(ggplot2)
+pm10$data2 <- seq(1,365,1)
+
+
+ggplot(pm10, aes(x = data2)) +
+  geom_path(aes(y = media), color = "red") +
+  geom_path(aes(y = mediana), color = "blue") +
+  geom_path(aes(y = max), color = "green")
+  
+
+```
+
+Io proverei a fare i modelli sia usando la media che il max per vedere cosa cambia. Cmq fai l'analisi dei residui anche se sembrerebbe che i modelli lineari sono siano i più appropriati in questo caso. Un'altra cosa che puoi fare per pulire un po' i modelli è standardizzare le variabili anche se non credo cambiarà tanto ma tu comunque provaci che almeno ti rivedi come si fa.
+
+
+
+
+
+
+
+
+
+
+
+
+
