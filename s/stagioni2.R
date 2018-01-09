@@ -5,7 +5,7 @@ pm10 <- read.csv2("data/pm2010.csv", dec = ".")
 install.packages("tidyverse")
 
 library(tidyr)
-#crea variabile per anno, giorno, mese
+#creO variabile per anno, giorno, mese
 pm10_a <- separate(pm10, col = "data", into = c("anno","mese","giorno"), sep = "-")
 
 pm10_a$mese2 <- as.numeric(pm10_a$mese)
@@ -20,7 +20,7 @@ str(pm10_a)
 # stagioni: primavera (21-03 / 20-06), estate (21-06/22-09), autunno (23-09 /21-12)
 # inverno(22-12/20-03)
 
-#divido in stagioni
+#divido in stagioni ----
 getSeason <- function(DATES) {
   WS <- as.Date("2010-12-22", format = "%Y-%m-%d") # Winter Solstice
   SE <- as.Date("2010-3-21",  format = "%Y-%m-%d") # Spring Equinox
@@ -92,12 +92,14 @@ cumsum(pcapm$eig / sum(pcapm$eig)) # con i primi tre assi spiego circa il 70% ch
 #nel mio dataset
 
 #vediamo adesso come si comportano le variabili qualitative - lascio a te l'interpretazione!!!!!!
-# STAGIONE ----
-
+# PCA STAGIONE ----
+par(mfrow= c(1,1))
 par(mfrow = c(2,2))
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2, col = c(1,2,3,4)) 
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3, col = c(1,2,3,4))
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = c(1,2,3,4))
+
+
 
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = rainbow(4)) #se volessi usare la funzione rainbow
 
@@ -122,7 +124,17 @@ col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_co
 # 5 - che cosa mi racconta quindi il grafico?
 
 
-#MESE ----
+#facile dire la devi fare tu gne gne gne gne XD alloraaaa( sto rosicando che l'avevo
+#già fatta ma cambiando computer ho fatto un panico... dunque)
+# rispondo alle domande per stagioni:
+
+# 1) le ellissi praticamente si sovrappongono rispetto alle componenti, in particolare
+# le componenti 1 e 3 , mentre sono trasversali tra 1 e 2 
+# 2) se per variazione intendi i picchi, in inverno c'è variazione
+# 3) le tre componenti sono la 1a la concentrazione del pm10 la 2a le variabili ambientali, la 3a la velocità del vento
+# 4) l'asse maggiore è parallelo alla componente che rappresenta la concentrazione
+# 5) essendo così tutte attaccate mi sa che il fattore stagione posso anche non cagarlo
+# posso invece indagare su st'inverno che esce fuori dagli schemi no??
 
 # attenta mese ha 12 livelli come factor non 4 come le stagioni se usi solo 4 colori non vedi gli altri mesi
 # approfitto per usare la funzione che hai usato prima 
@@ -139,43 +151,47 @@ s.class(pcapm$li, factor(pm10_a$giorno), xax = 1, yax = 2,col = sample(color, 31
 s.class(pcapm$li, factor(pm10_a$giorno), xax = 1, yax = 3,col = sample(color, 31))
 s.class(pcapm$li, factor(pm10_a$giorno), xax = 2, yax = 3,col = sample(color, 31))
 
-# mi sembra chiaro che in estate ed inverno (sia per giorno,mese,stagione)
-# sono opposti, quindi i dati sono inversi, e che invece autunno ed inverno
-# che sono le stagioni di mezzo la situazione è sovrapposta, non essendoci
-# estremi... sbaglio o in inverno ci sono dei brutti picchi???
+# direi che a questo punto non mi interessa per niente il fattore giorno e mese,
+# perche già con la stagione ho abbastanza livelli non aggiungo ulteriore confusione al tutto
 
+#DIREZIONE DEL VENTO ----
 s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2, col = sample(col_vector, nlevels(pm10$dv)))
 s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = sample(col_vector, nlevels(pm10$dv)))
 s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = sample(col_vector, nlevels(pm10$dv)))
 
 
-# il vento da nord ovest è attaccato all'asse y, mentre quello da
-# nord est è attaccato all'asse x nella seconda s class, ma lo fa 
-# anche nella terza... non capisco perchè stanno tutti al centro uno
-# sull'altro sti scemi.
+# ARI-DOMANDE
+# 1) le ellissi sono sempre accozzagliate l'una sull'altra rispetto alle componenti
+# 2) mi sembra che il vento da sudest ha sempre sti picchi malefici che escono dagli schemi
+# 3) le componenti sono sempre le stesse
+# 4) l'asse maggiore sta sempre sulla concentrazione di pm10
+# 5) anche qui stanno tutte una sull'altra non ci sta niente di "eclatante" apparte i picchi di vento 
+# da sudest
 
 # fatti le stesse domande che ti ho scritto prima
 
 
 # HILL-SMITH ----
 
-data_hills <- pm10_a[,c(1:10,15)]
 
-<<<<<<< HEAD
+
+
 #### HILLSMITH SU DATI ----
 
 data_hills<-(pm10_a[,1:10])
 data_hills$stagione<-pm10_a$Stagione
-=======
->>>>>>> c9b2c0c2a39b18311e3a4e17cace6376098075ee
+
+
 str(data_hills)
-data_hills$Stagione <- factor(data_hills$Stagione)
+data_hills$stagione<-as.factor(data_hills$stagione)
 dd1 <- dudi.hillsmith(data_hills, scannf = FALSE, nf = 3)
 par(mfrow = c(1,1))
 
 scatter(dd1, clab.row = 0.5, posieig = "bottom")
-# perchè lo scatter sta a fanculo in alto?
 
+# perchè lo scatter sta a fanculo in alto?
+# stavi pensando a cosa rappresentano i valori della hills e quali sono le 
+# componenti principali in questo caso...
 dd1$c1
 
 par(mfrow=c(1,1))
@@ -188,18 +204,19 @@ dd1$eig/sum(dd1$eig)
 cumsum(dd1$eig/sum(dd1$eig))
 
 
-# quindi aggiungendo le qualitative e facendo la hills 
-# i 3 assi mi perdono di dati??? e spiegano quasi il 50% dei dati?
+# quindi aggiungendo la stagione  e la dv e facendo la hills 
+# i 3 assi mi perdono quantità di informazione e spiegano quasi il 50% dei dati.
+
 
 # ma sopratutto ora che so che:
-# media mediana e max pesano un botto e sono super correlate
-# tmp,rdz,prs sono inversamente prop all'umidità e che la pioggia 
-# fa un pò come gli pare e la velocità del vento va per cazzi suoi
-# d'inverno la situazione è opposta all'estate e nelle stagioni di 
-# mezzo la situazione è mista.... che cazzo gli chiedo ai miei dati?
+# media mediana e max sono super correlate, quindi mi conviene tenerne una sola
+# tmp,rdz,prs sono inversamente prop all'umidità e che la pioggia sta a se
+#velocità del vento va per fatti suoi e tira i miei dati
+# d'inverno ho dei picchi particolari che non so se hanno valenza
+# e mi sembra che la direzione NW può avere una valenza 
 
-<<<<<<< HEAD
-##### CHE CE FACCIO CO STI DATI?!?!?! ----
+
+
 
 # provo a vedere sta velocità del vento che problemi ha 
 
@@ -218,17 +235,65 @@ summary(modvv)
 
 
 
+names(data_hills)
 
+corr<-cor(data_hills[,1:9])
+summary(corr)
 
-modvv1<-lm(,data=data_hills)
-summary(modvv1)
-=======
 # potresti cominciare a fare una bella regressione multipla per vedere se le variabile che hai spiegano la conc di pm10
 # poi commentiamo meglio magari su skype!!!!
 
+### REGRESSIONE MULTIPLA ----
+
+
+mod1<-lm(media~.,data=data_hills)
+
+summary(mod1)
+
+# non capisco perchè è sparito l'autunno cmq dalle stagioni
+AIC(mod1)
+
+# dal risultato del modello mi sembra che ovviamente hanno rilevanza mediana e 
+# massima che si accavallano sempre con l'intercetta che è la media
+# sbaglio o la direzione del vento N-NW ha rilevanza?, e poi l'R2 è un sacco alto
+# ma l'AIC è altissimo quindi questo modello non spiega assolutamente nulla ahaha
+
+mod1s=step(mod1,direction="both")
+
+# a giudicare da questo credo che eliminerò max e mediana e provo a comparare 
+# max e media con due modelli differenti in quanto sono sempre correlate e vedo
+# se cambia qualcosa 
+
+
+mod2<-lm(media~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
+
+summary(mod2)
+
+# ok lui non è proprio un buon modello
+
+mod2s=step(mod2,direction="both")
+
+#azzarderei assolutamente no..
+
+
+mod3<-lm(max~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
+
+summary(mod3)
+
+mod3s=step(mod3,direction="both")
+# ma che palle ho sempre un AIC altissimoooooooo
+
+# i miei modelli fanno rateeeeee
+# provo con il glm
+
+glm1<-glm(data_hills)
+summary(glm1)
+
+
+# manco questo..non so dove sbattere la testa aaaaaah
 
 
 
 
 
->>>>>>> c9b2c0c2a39b18311e3a4e17cace6376098075ee
+
