@@ -164,6 +164,11 @@ s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = sample(col_vector, 
 s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = sample(col_vector, nlevels(pm10$dv)))
 
 
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2, col = rainbow(nlevels(pm10$dv)),clabel = .8)
+s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = rainbow(nlevels(pm10$dv)))
+s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = rainbow(nlevels(pm10$dv)))
+
+
 # ARI-DOMANDE
 # 1) le ellissi sono sempre accozzagliate l'una sull'altra rispetto alle componenti
 # 2) mi sembra che il vento da sudest ha sempre sti picchi malefici che escono dagli schemi
@@ -251,53 +256,37 @@ summary(corr)
 
 
 mod1<-lm(media~.,data=data_hills)
-
 summary(mod1)
-
-# non capisco perchè è sparito l'autunno cmq dalle stagioni
-AIC(mod1)
-
-# dal risultato del modello mi sembra che ovviamente hanno rilevanza mediana e 
-# massima che si accavallano sempre con l'intercetta che è la media
-# sbaglio o la direzione del vento N-NW ha rilevanza?, e poi l'R2 è un sacco alto
-# ma l'AIC è altissimo quindi questo modello non spiega assolutamente nulla ahaha
-
+qqnorm(mod1$residuals)
+qqline(mod1$residuals,col=2)
 mod1s=step(mod1,direction="both")
-
-# a giudicare da questo credo che eliminerò max e mediana e provo a comparare 
-# max e media con due modelli differenti in quanto sono sempre correlate e vedo
-# se cambia qualcosa 
+summary(mod1s)
 
 
-mod2<-lm(media~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
+
+
+mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 
 summary(mod2)
 
-# ok lui non è proprio un buon modello
 
 mod2s=step(mod2,direction="both")
+summary(mod2s)
+qqnorm(mod2s$residuals)
+qqline(mod2s$residual, col=2)
 
-#azzarderei assolutamente no..
 
-
-mod3<-lm(max~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
-
+mod3<-lm(max~tmp+mediana+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 summary(mod3)
 
 mod3s=step(mod3,direction="both")
-# ma che palle ho sempre un AIC altissimoooooooo
-
-# i miei modelli fanno rateeeeee
-# provo con il glm
-
-glm1<-glm(data_hills)
-summary(glm1)
-
-
-# manco questo..non so dove sbattere la testa aaaaaah
+summary(mod3s)
+qqnorm(mod3s$residuals)
+qqline(mod3s$residuals,col=2)
 
 
 
 
 
-
+# a me sembra che il secondo modello levando la mediana ma aggiungendo la max
+# sia buono, il terzo un pò meno...
