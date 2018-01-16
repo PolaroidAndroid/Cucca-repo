@@ -253,40 +253,111 @@ summary(corr)
 # poi commentiamo meglio magari su skype!!!!
 
 ### REGRESSIONE MULTIPLA ----
-
+# mod 1 tutto dentro
 
 mod1<-lm(media~.,data=data_hills)
 summary(mod1)
+plot(mod1)
 qqnorm(mod1$residuals)
 qqline(mod1$residuals,col=2)
+
+
 mod1s=step(mod1,direction="both")
 summary(mod1s)
+plot(mod1s)
 
-
+# mod 2 media+massima
 
 
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
-
 summary(mod2)
+# l'r2 sembra buono qui 0.83
+
+par(mfrow=c(1,1))
+par(mfrow = c(2,2))
+
+plot(mod2)
+# mi sembra che ci siano dei valori anomali, 48 334 e 50 
+# per  residual vs fitted: la nuvola c'è  ed è abbastanza compatta e non proprio del tutto centrata e c'è una 
+# lieve nello smooth ...che dovrebbe essere al centro, andando così in alto mi fa pensare a qualcosa di logaritmico
+# magari sto a di una cazzata magari no...è la pioggia?)
+# nel normal q-q sembrano nomarli sempre eccetto quei due tre valori anomali
+# negli standardizzati/fitted c'è sempre una bella nuvola ma c'è sempre questa 
+# retta che sembra un logaritmo..quindi direi che non sono omoschedastici, altrimenti dovrebbe essere
+# dritta la retta 
+# nella leverage è palese che i valori sono oltre la distanza di cook quindi qualcosa mi influenza il tutto
+# mi viene da dire che nemmeno questo va bene 
 
 
+par(mfrow)
 mod2s=step(mod2,direction="both")
 summary(mod2s)
+plot(mod2s)
+# anche con la stepwise ho problemi nei residui, i valori anomali sono sempre gli stessi
+# qui si vede nella leverage un "distacco in due nuvole" non so se ha un significato o meno
+
 qqnorm(mod2s$residuals)
 qqline(mod2s$residual, col=2)
 
-
+# mod 3 max + mediana
 mod3<-lm(max~tmp+mediana+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 summary(mod3)
+# anche qui l' r2 è buono 0.73
+
+plot(mod3)
+# per il residual vs fitted qui va un pò meglio
+# i valori anomali qui sono 335, 78, 48
+# il normal qq un pò peggio 
+# mentre finalmente non ho più eteroschedasticità con la leverage
+# cook rimane sempre un pò un panico
+
 
 mod3s=step(mod3,direction="both")
 summary(mod3s)
+plot(mod3s)
+# pure con la stepwise mi sembra che più o meno siamo li...
+
 qqnorm(mod3s$residuals)
 qqline(mod3s$residuals,col=2)
 
+# mod 4 mediana
+
+mod4<-lm(mediana~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
+summary (mod4)
+plot(mod4)
+
+mod4s=step(mod4,direction="both")
+summary(mod4s)
+plot(mod4s)
+# r2 bassino e valori anomali 335,334,50
+# i residui hanno uno smooth inverso a quello dei modelli prima
+
+# mod 5 media
+
+mod5<-lm(media~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
+summary(mod5)           
+plot(mod5)           
+
+mod5s=step(mod5,direction="both")
+summary(mod5s)
+plot(mod5s)
+# anchce qui r2 basso, e residui inversi con valori anomali 335,334,50
+
+# mod 6 max 
+
+mod6<-lm(max~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)     
+summary(mod6)
+plot(mod6)
+
+mod6s=step(mod6,direction="both")
+summary(mod6s)
+plot(mod6s)
+
+# dai residui qui abbiamo 78 50 e 335 che sono anomali
+# smooth sempre inverso a quello di prima con un'inclinazione specifica.
+
+# se dovessi scegliere un modello sceglierei il 3° perchè ha un buon r2 e non mi
+# sembra messo malissimo con i residui...
+# ma sicuro non ho capito nulla e mi redarguirai per bene ps. lo so che mi odi
 
 
-
-
-# a me sembra che il secondo modello levando la mediana ma aggiungendo la max
-# sia buono, il terzo un pò meno...
