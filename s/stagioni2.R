@@ -2,7 +2,7 @@
 pm10 <- read.csv2("data/pm2010.csv", dec = ".")
 
 #questo è un pacchetto di pacchetti. Contiene molti pacchetti utili :-)
-install.packages("tidyverse")
+#install.packages("tidyverse")
 
 library(tidyr)
 #creO variabile per anno, giorno, mese
@@ -263,17 +263,38 @@ mod1s=step(mod1,direction="both")
 summary(mod1s)
 
 
-
-
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 
-summary(mod2)
 
+summary(mod2)
 
 mod2s=step(mod2,direction="both")
 summary(mod2s)
 qqnorm(mod2s$residuals)
 qqline(mod2s$residual, col=2)
+par(mfrow=c(2,2))
+plot(mod2s)
+par(mfrow=c(1,1))
+plot(mod2s$residuals~data_hills$dv)
+plot(mod2s$residuals~data_hills$stagione)
+acf(mod2s$residuals)
+cor(data_hills[,c(1:9)])
+
+
+#direi che questo è il modello migliore. Se ti va provati a vedere come funzionao i gam. Ti passo lo zuur appena posso. 
+# sono un po' perplesso dal fatto che la max si prenda tutta la variabilità però se la prof vi ha detto di metterla lo sa 
+# meglio lei di sicuro
+# pacchetto mgcv 
+
+# che cosa vedi in questo modello???
+# che ti dice l'output???
+
+#iniziate a buttare giu anche il testo
+
+
+mod4<-lm(media~tmp+vv+dv+umr+stagione,data=data_hills)
+summary(mod4)
+anova(mod4,mod2s)
 
 
 mod3<-lm(max~tmp+mediana+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
