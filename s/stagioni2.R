@@ -360,4 +360,10 @@ plot(mod6s)
 # sembra messo malissimo con i residui...
 # ma sicuro non ho capito nulla e mi redarguirai per bene ps. lo so che mi odi
 
+# ricorda di provare il modello standardizzando le variabili!!!!
+
+
+
+
+
 
