@@ -1,0 +1,37 @@
+data(CO2)
+##### prendiamo i dati di un esperimento in cui si misura l'assorbimento di CO2 da parte di piante provenienti
+#### da due aree diverse e sottoposte in egual numero a trattamenti diversi 
+par(mfrow=c(1,2))
+boxplot(CO2$uptake~CO2$Type)
+boxplot(CO2$uptake~CO2$Treatment*CO2$Type,cex.axis=0.5)
+w=CO2$Treatment=="chilled"
+pp=rep(20,nrow(CO2))
+pp[w]=22
+### vediamo l'asorbimento in funzione della concentrazione al variare delle diverse caratteristiche
+par(mfrow=c(1,1))
+plot(CO2$uptake~CO2$conc,pch=pp,col=CO2$Type,xlab="Concentrazione CO2",ylab="assorbimento CO2")
+legend("topleft",c("Quebec non raffreddate","Quebec raffreddate", "Mississipi non raffredate", "Mississipi raffredate"), pch=c(20,22,20,22),col=c(1,1,2,2),cex=0.5)
+cor(CO2$uptake,CO2$conc)
+cor.test(CO2$uptake,CO2$conc)
+#####c'è una correlazione positiva tra assorbimento di CO2 e concentrazione atmosferica
+mod0=lm(uptake~conc,data=CO2)
+summary(mod0)### Rquadro basso
+plot(mod0)
+shapiro.test(residuals(mod0)) ##abbastanza bene
+mod1=lm(uptake~conc+Type,data=CO2)##intercetta diversa per ogni gruppo
+summary(mod1)## meglio
+mod2=lm(uptake~conc*Type,data=CO2)### intercetta e inclinazione diverse per ogni gruppo
+summary(mod2)#ancora meglio!
+
+plot(CO2$uptake~CO2$conc,pch=pp,col=CO2$Type,xlab="Concentrazione CO2",ylab="assorbimento CO2")
+legend("topleft",c("Quebec non raffreddate","Quebec raffreddate", "Mississippi non raffredate", "Mississippi raffredate"), pch=c(20,22,20,22),col=c(1,1,2,2),cex=0.5)
+w=CO2$Type=="Quebec"
+abline(lm(uptake~conc,data=CO2[w,]))
+abline(lm(uptake~conc,data=CO2[!w,]),col=2)
+
+### corner point \`e Quebec se vogliamo cambiare allora usiamo la funzione relevel
+Type.new=relevel(CO2$Type,ref="Mississippi")
+summary(lm(uptake~conc*Type.new,data=CO2))
+
+
+summary(lm(uptake~conc*(Type*Treatment),data=CO2))

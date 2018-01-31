@@ -1,0 +1,24 @@
+﻿Valori giornalieri di concentrazione di polveri sottili (PM10) sulla città di taranto nel 2009
+ (i valori qui riportati partono dalle medie giornaliere calcolate su 6 centraline, questi valori sono poi sintetizzati con media, mediana e massimo)
+
+
+"media"=valore medio giornaliero
+   "mediana"=valore mediano giornaliero
+ "max"=valore massimo giornaliero
+meteo:
+     "tmp"= temperatura
+   
+  "umr"=umidità relativa     
+     "pgg"=totale di pioggia
+     "rdz"=radazione solare
+     "prs"=pressione
+     "vv"=velocità del vento     
+  
+   "dv"=direzione del vento (secondo la rosa dei venti)
+      "data"=data della rilevazione
+ 
+
+
+
+
+

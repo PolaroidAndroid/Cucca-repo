@@ -1,0 +1,567 @@
+#################
+########## Introduction to R for phytoplankton community ecology
+########## Scuola di Dottorato in Ecologia e Cambiamenti Climatici
+########## Giorno 1: Introduzione all'uso di R
+##########           serena.arima@uniroma1.it
+#################
+
+#######
+##### Come entrare e uscire da casa R?
+#######
+
+### Entrare: doppio click sull'icona e si apre la "CONSOLE"
+
+# Cominciamo dall'elaborazione minima ovvero       
+# dalla possibilità di usare erre come calcolatrice
+
+2+2
+
+# Adesso iniziamo a vedere le prime cose sugli oggetti di erre
+# che possiedono un nome                                      
+
+a
+a=2+2
+a
+
+2+2
+a=2+2
+
+# quali sono gli oggetti memorizzati nella console?
+
+ls()
+
+# dove stiamo lavorando? Ossia in quale directory di lavoro (working directory) stiamo memorizzando i nostri dati?
+
+getwd()
+
+# proviamo a cambiare la directory di lavoro mediante il menù a tendina (File--_> cambia directory)
+# tutto ciò che salveremo da adesso in poi, verrà memorizzato in quella directory di lavoro.
+
+# come faccio a vedere i comandi che ho digitato fino ad ora?
+
+history()
+
+# salviamo la history
+
+savehistory()
+
+# salviamo l'intero workspace dando un nome nostro file
+
+save.image("giorno1.RData")
+
+# e vediamo che files sono stati salvati nella nostra directory di lavoro
+
+dir(all.files=TRUE)
+
+### Uscire: 2 diverse possibilità
+### 1) chiudiamo dalla crocetta rossa: Salva area di lavoro? SI NO
+### 2) digitiamo q()
+### 1) e 2) salvano i seguenti oggetti:
+###### File .RData : contiene il risultato di ciò che abbiamo eseguito (a)
+###### File .Rhistory: i comandi eseguiti (script)
+
+# ********
+# ********
+# ********
+#### RIASSUMIAMO: comandi utilizzati fino ad ora
+
+# 1) il simbolo "=" permette di assegnare ad un oggetto (quantità sulla sx) un contenuto (quantità sulla dx): quindi se scrivo a=b assegno all'oggetto "a" il valore dell'oggetto "b"
+# 2) getwd: traduzione "restituisci la directory di lavoro"
+# 3) cambiare la directory di lavoro mediante menu a finestre;
+# 4) history() ---> visualizza TUTTI i comandi digitati
+     savehistory() ---> salva TUTTI i comandi digitati
+     save.image() ---> salva l'intero workspace (ossia il risultato dei comandi digitati)
+# 5) ls() --> permette di visualizzare gli oggetti creati e salvati nel ws
+# ********
+# ********
+# ********
+
+# Ripartiamo dalla sessione precedente andando a pescare
+# il file .RData dalla directory opportuna oppure       
+# reimpartendo tutti i comandi precedenti memorizzati   
+# nel file .Rhistory                                    
+
+#######
+##### Come orientarsi e chiedere aiuto ad R?
+#######
+
+help.start()
+
+#Per quanto riguarda la documentazione sulla sintassi di specifici comandi ed i
+#relativi argomenti opzionali sono utili i comandi in linea
+# help()
+# help.search()
+
+help(quit)
+
+# Quante altre operazioni numeriche e con quale sintassi?
+
+help(Arithmetic)
+help(Sqrt)
+help(Logarithmic)
+help(Trig)
+help(Special)
+
+# Una volta ripresa la sessione in "R console"
+# vediamo cosa altro può fare l'ambiente R    
+
+# Le entità più semplici che possono costituire un oggetto di R
+# (a cui assegnare un nome) sono                               
+
+# [1] elementi scalari (numerici {[interi, reali] o complessi})
+
+a=10
+b=15.53
+c=3.51+1.2i
+
+# [2] elementi stringhe di caratteri
+d="Ciao"
+e="Serena"
+
+# [3] elementi logici
+f=TRUE
+g=FALSE
+h=F
+i=T
+
+# iniziamo a parlare di
+# oggetti VETTORI      
+# e modo degli oggetti 
+
+c(1,2,3)
+v1=c("s","e","r","e","n","a")
+v2=c(1,2,3,4)
+
+mode(v1)
+mode(v2)
+
+#alcune operazioni
+
+sort(v2)
+v2*2
+
+# il resto della divisione
+
+v2%%3
+
+### come selezioniamo i numeri pari???
+v2%%2
+
+
+v1*2
+### mmhhh
+
+# cambiamo il "modo"
+
+mode(v2)="character"
+v2
+2*v2
+
+# [3] function
+
+mode(quit)
+
+### quanti e quali oggetti ho salvato fino ad ora?
+
+ls()
+
+# puliamo lo spazio di lavoro:
+
+# rimuoviamo il primo vettore
+rm(v1)
+# puliamo tutta la console 
+rm(list=ls())
+
+ls()
+
+# anche se quit non è nel workspace fa parte degli
+# oggetti di modo "function" ovvero funzioni interne
+# di R ovvero uno dei tanti oggetti inclusi automaticamente nella
+# memoria di R
+
+#####
+## Un primissimo e semplicissimo esempio di funzione:
+## come possiamo calcolare l'area del cerchio?
+#####
+
+area.cerchio=function(raggio){
+out=raggio*raggio*pi
+return(out)
+}
+
+area.cerchio(1)
+area.cerchio(2)
+
+### quesito per voi: proviamo a scrivere la funzione che calcola
+### l'area di un rettangolo? occhio che in questo caso la funzione
+### presenta 2 argomenti!!!
+
+
+# Impariamo a lavorare con i vettori e con le funzioni tipicamente
+# impiegate per manipolare i vettori
+# sia di modo "numeric"
+# sia di modo "character"
+# sia di modo "logical"
+
+## oggetti di tipo "numeric"
+
+vettore=c(1,2,3,4,5)
+length(vettore)
+sum(vettore)
+prod(vettore)
+min(vettore)
+max(vettore)
+cumsum(vettore)
+cumprod(vettore)
+diff(cumprod(vettore))
+vettore
+vettore*vettore
+vettore*5
+vettore*c(5)
+vettore*c(1,2)
+vettore*c(5,5,5,5,5)
+vettore*c(1,2,1,2,1)
+
+### estrazione degli elementi di un vettore:
+
+vettore[1]
+vettore[1:2]
+vettore[c(1,5)]
+
+# creiamo un vettore come una sequenza di valori:
+
+?seq
+vet.seq=seq(1,10,2)
+
+# creiamo un vettore ripetendo lo stesso valore o una sequenza di valori
+
+rep(3,10)
+rep(c(1,2,3),10)
+rep(c(1,2,3),each=10)
+
+
+## oggetti di tipo character
+
+?paste
+paste("Ciao","Serena")
+paste("Ro","ma",sep="")
+paste("Roma","Milano","Torino",sep="-")
+paste(c("Roma","Milano","Torino"),collapse="-")
+paste(c("Roma","Milano","Torino"),"Palermo",sep="-")
+
+## oggetti logici
+
+# NOT ovvero Negazione
+# [carattere ! o punto esclamativo]
+!TRUE
+# AND ovvero Congiunzione o Intersezione
+# [carattere & o lettera e-commerciale o ampersand]
+TRUE & FALSE
+TRUE & TRUE
+c(T,T,F,F) & c(T,F,T,F)
+# OR ovvero Alternativa o Unione
+# [carattere | o barra verticale]
+TRUE | FALSE
+c(T,T,F,F)|c(T,F,T,F)
+
+
+vettore.logico=c(T,T,F,F,T)
+vettore.logico
+
+any(vettore.logico)
+all(vettore.logico)
+which(vettore.logico)
+
+## "esattamente uguale a" si codifica mediante ==
+## ossia 
+a=c(3,1,2)
+a==3
+# ossia il primo elemento è l'unico esattamente uguale a 3
+which(a==3)
+
+
+# ecco uno dei personaggi scomodi spesso
+# presenti anche nei dati reali:
+# il dato mancante
+# in R rappresentato dalle lettere NA (Not Available)
+
+0/4
+4/0
+0/0
+
+# per scovare dove sono i dati mancanti
+
+vettore=c(1,2,3,NA,4)
+is.na(vettore)
+!is.na(vettore)
+
+# quali sono?
+
+which(is.na(vettore)==TRUE)
+
+# altre cose importanti da sapere per poter
+# estrarre le informazioni che interessano
+
+vettore
+vettore>3
+vettore[vettore>3]
+vettore[-1]
+vettore[-(1:3)]
+vettore[!is.na(vettore)]
+
+
+# ********
+# ********
+# ********
+#### RIASSUMIAMO: comandi utilizzati fino ad ora 
+
+# 1) help: come chiedere aiuto in R
+# 2) elementi in R: scalari, stringhe ed elementi logici
+# 3) come creare un vettore: si utilizza l'operatore di concatenamento "c":
+     se voglio creare una successione di valori 1 2 3 scriverò
+     c(1,2,3)
+# 4) qualche operazione sui vettori (selezione di elementi,length, sum, sort ....)
+# 5) il comando "which":   
+     se scrivo which(a>2) sto rispondendo alla domanda: 
+     "QUALI ELEMENTI del vettore a sono maggiori di 2?"
+      o meglio
+      "PER QUALI ELEMENTI del vettore a l'operazione a>2 risponde TRUE?"
+      ... infatti
+      a=c(2,4,1,5)
+      # se scrivo 
+      a>2
+      FALSE  TRUE FALSE  TRUE
+      # se scrivo
+      which(a>2)
+      2  4
+      # in quanto solo gli elementi in posizione 2 e 4 sono maggiori di 2
+      # come seleziono gli elementi in posizione 2 e 4? 
+
+# 6) i dati mancanti: il comando is.na
+# 7) come creare semplicissime funzioni.
+# ********
+# ********
+# ********
+
+
+# ora vediamo una estensione di vettore ossia le MATRICI
+# o meglio gli oggetti di **classe** "matrix"
+
+matrice1=matrix(0,nrow=6,ncol=4)
+matrice1
+mode(matrice1)
+class(matrice1)
+matrice2=matrix(1:24,nrow=6,ncol=4)
+matrice2
+matrix(1:24,nrow=6,byrow=T)
+dim(matrice2)
+nrow(matrice2)
+ncol(matrice2)
+
+# operazioni sulle matrici
+
+# ** selezionare elementi di una matrice
+
+# elemento di coordinate (1,1)
+matrice1[1,1]
+# elementi di coordinate (1,1), (1,2) e (1,3)
+matrice1[1,1:3]
+# elementi di coordinate (1,1), (1,2), (2,1), (2,2)
+matrice[1:2,1:2]
+# tutta la prima riga
+matrice[1,]
+# tutta la prima colonna
+matrice[,1]
+
+# ** la trasposta
+t(matrice2)
+
+# ** l'inversa
+solve(matrice2)
+# ... oooppps cosa succede???
+matrice3=matrix(c(1,4,2,5),2,2)
+solve(matrice3)
+
+# ** il determinante
+det(matrice3)
+
+# ** la traccia della matrice
+diag(matrice3)
+sum(diag(matrice3))
+
+# e tante altre cosette come autovalori, autovettori etc etc etc
+
+######
+## Operazioni di sintassi sulle matrici
+######
+
+# riprendiamo la nostra matrice2
+
+matrice2
+
+# vogliamo verificare se matrice2 contiene il numero 10
+
+matrice2==10
+any(matrice2==10)
+
+# e in quale riga/ colonna è il numero 10?
+which(matrice2==10, arr.ind=T)
+
+# e se scrivo
+which(matrice2==10)
+# come interpretiamo questa risposta? proviamo a "srotolare" la nostra
+# matrice per colonne ... quale posto è occupato dal numero 10???
+
+# ora proviamo a verificare se i numeri 10 e 5 sono nella matrice
+
+any(matrice2==10 | matrice2==5)
+which(matrice2==10 | matrice2==5,arr.ind=T)
+
+# vogliamo verificare se i numeri 10 e 16 sono sulla stessa riga:
+# il comando %in%
+# Spieghiamo questo nuovo comando partendo da un semplice vettore:
+
+vet=c(1,5,7,9,10)
+# voglio verificare se i numeri 1 e 9 sono presenti in questo vettore
+
+vet%in%c(1,9)
+which(vet%in%c(1,9))
+
+# ritornando alla nostra matrice cosa scriverei?
+
+matrice2%in%c(10,16)
+
+# per avere una risposta un pò più chiara
+mat.srotolata=matrice2%in%c(10,16)
+mat.organizzata=matrix(mat.srotolata, nrow=6,ncol=4,byrow=F)
+
+# e per vedere se sono sulla stessa riga?
+# basta sommare sulle righe e vedere se ottengo un risultato 
+# pari a 2 (ci sono 2 TRUE)
+
+sum(mat.organizzata[1,])
+sum(mat.organizzata[2,])
+sum(mat.organizzata[3,])
+sum(mat.organizzata[4,])
+sum(mat.organizzata[5,])
+sum(mat.organizzata[6,])
+
+# bene! sulla quarta riga i 2 numeri sono presenti contemporaneamente!
+# rifacciamo questa stessa operazione su una matrice avente 100000 righe ...
+# ..... complicato vero???
+
+########
+### il COMANDO "APPLY"
+########
+
+help(apply)
+
+# in altre parole
+
+apply(X, MARGIN=1, FUN=mia funzione)
+
+# applica sulle RIGHE (MARGIN=1) della matrice X la mia funzione (FUN=mia funzione) 
+
+apply(X, MARGIN=2, FUN=mia funzione)
+
+# applica sulle COLONNE (MARGIN=2) della matrice X la mia funzione (FUN=mia funzione) 
+
+# esempio: riprendiamo la matrice2 e sommiamo tutte le righe
+apply(matrice2,1,sum)
+
+# proviamo a rispondere alla domanda precedente:
+apply(mat.organizzata,1,sum)
+which(apply(mat.organizzata,1,sum)==2)
+
+
+### visto che siamo diventati bravi ... scriviamo una funzione
+### che ci dice direttamente se 2 valori sono contenuti nella
+### stessa riga
+
+trova.vettore=function(x,y){
+out=x%in%y
+return(sum(out))
+}
+
+apply(matrice2,1,trova.vettore,y=c(10,16))
+
+# as easy as it is!!!! :)
+
+# ma come si possono combinare dati di natura diversa in una struttura
+# simile a quella di una matrice? In fondo i dati statistici hanno
+# spesso una forma mista di tipo dato nominale/categoriale e dato numerico
+
+nome=c("Serena","Fabio","Giovanna","Alessio")
+eta=c(30,35,32,34)
+sesso=c("F","M","F","M")
+vaccino=c(T,T,F,F)
+dati=data.frame(nome,eta,sesso,vaccino)
+dati
+dim(dati)
+
+# vediamo la differenza con la matrice
+
+mat.dati=cbind(nome,eta,sesso,vaccino)
+mat.dati
+mode(mat.dati)
+dim(mat.dati)
+str(dati)
+attributes(dati)
+str(mat.dati)
+attributes(mat.dati)
+
+# volendo volare alto
+# introduciamo gli array a 3 o più dimensioni
+# ovvero oggetti di classe "array"
+
+array(1:24,dim=c(4,3,2))
+
+# (le matrici sono un caso particolare)
+array(1:24,dim=c(6,4))
+
+
+
+# e ora parliamo di ordinamenti
+# che dipendono dal modo degli oggetti
+# riprendiamo il nostro data set dati
+
+mode(nome)
+sort(nome)
+sort(nome,decreasing=T)
+mode(eta)
+sort(eta)
+sort(eta,decreasing=T)
+mode(vaccino)
+sort(vaccino)
+
+# differenza tra sort(...) e order(...)
+
+nome
+sort(nome)
+order(nome)
+order(sesso)
+order(sesso,eta)
+
+# order è molto utile per riordinare anche le matrici
+# o i data.frame
+
+dati[order(sesso),]
+
+# a parità di sesso, ordina rispetto all'età
+
+dati[order(sesso,eta),]
+
+
+
+# ********
+# ********
+# ********
+#### RIASSUMIAMO: comandi utilizzati fino ad ora 
+# 1) le matrici, come estensione degli array
+# 2) operazioni semplici con le matrici
+# 3) il comando "apply"
+# 4) il data. frame
+# 5) gli ordinamenti: la differenza tra sort e order
+# ********
+# ********
+# ********

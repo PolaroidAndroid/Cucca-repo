@@ -1,0 +1,124 @@
+library(gdata)
+#### lettura di file excel
+alberi<-read.xls("alberi.xls",sheet=1)
+##### se non funziona l'istruzione di lettura da file excel
+#### salvare i dati in formato .csv da excel, controllare quale sia il separatore di campo e quello dei decimali 
+### quindi leggere i dati con read.table, ad esempio:
+alberi<-read.table("alberi.csv",header=T,sep=";",dec=",")
+### questa istruzione funziona se il separatore è il ; e il separatore dei decimali la , 
+
+names(alberi) #per vedere come sono stati importati i nomi di colonna
+### cambiamoli
+colnames(alberi)<-c("specie","diametro","altezza")
+summary(alberi) ### vediamo cosa contiene il dataset appena creato 
+#### la variabile specie è una variabile qualitativa che in R e' rappresentata come "factor". Per i factor la funzione summary produce la distribuzione di frequenza, mentre per le variabili numeriche produce le statistiche di base
+### minimo, primo quartile (25% dei dati), mediana (50% dei dati), media, terzo quartile (75% dei dati) e massimo
+
+#### osserviamo che di una specie è disponibile un solo record, quindi è inutile tenerla nelle analisi successive. Eliminiamo la riga della tabella che contiene quella specie. 
+#### per fare questo usiamo una variabile logical
+#### ovvero una variabile che contiene TRUE o FALSE a seconda che una condizione sia verificata o meno
+
+w<-alberi$specie=="Acer Campestre"
+
+#### in w ci sono tutti False tranne che sulla riga dell' Acer Campestre
+### ridefiniamo il dataset alberi usando il negato di w ovvero !w= cambia i true in false e i false in true
+### in questo modo otteniamo
+alberi<-alberi[!w,]
+summary(alberi)
+#### la variabile factor però conserva memoria della specie  Acer Campestre, per eliminare l'etichetta usiamo la funzione factor
+alberi$specie<-factor(alberi$specie)
+summary(alberi)
+
+###### esploriamo i dati a disposizione
+######### grafico a dispersione delle due variabili disponibili
+
+plot(alberi[,c(2,3)],xlab="diametro",ylab="altezza")
+#coloriamo diversamente i valori per ciascuna specie
+## costruiamo un vettore che contenga i nomi delle specie presenti
+
+specie1<-levels(alberi$specie)
+## ora selezioniamo le righe di alberi per ciascuna specie
+w<-alberi$specie==specie1[1]
+#### disegnamo i punti relativi alla prima specie
+points(alberi[w,c(2,3)],pch=20,col=2)
+#passiamo alla seconda e alla terza specie con lo stesso meccanismo
+w<-alberi$specie==specie1[2]
+points(alberi[w,c(2,3)],pch=20,col=4)
+
+w<-alberi$specie==specie1[3]
+points(alberi[w,c(2,3)],pch=20,col=3)
+### aggiungiamo una legenda
+legend(45,10, specie1,pch=20,col=c(2,4,3))
+## le tre osservazioni del taxus baccata sono poche anche loro per poterle usare in senso statistico, leviamo anche loro
+w<-alberi$specie==specie1[3]
+alberi<-alberi[!w,]
+alberi$specie<-factor(alberi$specie)
+
+#### disegnamo i boxplot delle variabili 
+boxplot(alberi[,-1],col=c(2,4))
+### sia il diametro che l'altezza hanno molti valori "anomali" vediamo se questo dipende dalla specie o se dipende proprio dal campione
+par(mfrow=c(1,2))
+boxplot(alberi$diametro~alberi$specie,col=rainbow(2))
+boxplot(alberi$altezza~alberi$specie,col=rainbow(2))
+
+### vediamo se su scala log hanno un andamento più regolare
+par(mfrow=c(1,2))
+boxplot(log(alberi$diametro)~alberi$specie,col=rainbow(2))
+boxplot(log(alberi$altezza)~alberi$specie,col=rainbow(2))
+### costruiamo anche il grafico a dispersione su scala log
+par(mfrow=c(1,1))
+plot(log(alberi[,c(2,3)]),xlab="diametro",ylab="altezza")
+#coloriamo diversamente i valori per ciascuna specie
+## costruiamo un vettore che contenga i nomi delle specie presenti
+
+specie1<-levels(alberi$specie)
+## ora selezioniamo le righe di alberi per ciascuna specie
+w<-alberi$specie==specie1[1]
+#### disegnamo i punti relativi alla prima e seconda  specie
+points(log(alberi[w,c(2,3)]),pch=20,col=2)
+w<-alberi$specie==specie1[2]
+points(log(alberi[w,c(2,3)]),pch=20,col=4)
+legend(3.0,2, specie1,pch=20,col=c(2,4))
+#### sembra che la abies alba abbia valori sistematicamente più bassi del fagus sylvatica sia su scala originale che su scala log
+
+#### sarà una differenza significativa quella che osserviamo?
+############### verifica della normalità
+qqnorm(alberi$diametro)
+qqline(alberi$diametro,col=2)
+qqnorm(log(alberi$diametro))
+qqline(log(alberi$diametro),col=2)
+
+qqnorm(alberi$altezza)
+qqline(alberi$altezza,col=2)
+qqnorm(log(alberi$altezza))
+qqline(log(alberi$altezza),col=2)
+
+
+########## lavoriamo su scala log
+alberi.log<-alberi
+alberi.log[,c(2,3)]<-log(alberi[,c(2,3)])
+
+######## test t tra le medie con varianze diverse
+####### anticipiamo l'uso di un test che ancora non abbiamo visto
+##### deviazioni standard 
+s.dia<-sqrt(var(alberi.log$diametro))
+s.alt<-sqrt(var(alberi.log$altezza))
+
+with(alberi.log, t.test(diametro[specie == specie1[1]], diametro[specie == specie1[2]]))
+
+with(alberi, t.test(diametro[specie == specie1[1]], diametro[specie == specie1[2]]))
+#### per il diametro non si osserva una differenza significativa tra le medie 
+
+with(alberi.log, t.test(altezza[specie == specie1[1]], altezza[specie == specie1[2]]))
+
+with(alberi, t.test(altezza[specie == specie1[1]], altezza[specie == specie1[2]]))
+
+##### per l'altezza invece la differenza tra le medie è significativa
+
+
+######### compito 1  ########################
+#### analizzare i dati contenuti in alberi2
+#### i risultati vanno organizzati e commentati
+### in una relazione molto stringata e restituiti
+### al docente entro il 15 novembre
+###############################################

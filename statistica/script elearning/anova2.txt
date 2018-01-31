@@ -1,0 +1,74 @@
+###anova
+trat<-read.table("trattamenti.txt",header=T) #lettura dati
+#i valori vanno impilati e i nomi di colonna diventano etichette di trattamento
+trats<-stack(trat)
+#analisi della varianza
+anova(aov(trats[,1]~trats[,2]))
+model.tables(aov(trats[,1]~trats[,2]),se=T)
+### esempio 2 
+### dati riportati rappresentano il peso del cibo (in Kg) consumato giornalmente da un cervo adulto misurato in diversi periodi dell’anno. Verificare l’ipotesi che il consumo di cibo sia uguale in tutti i mesi esaminati. Il numero totale di cervi è 22
+cervi<-read.table("cervi.csv",header=T, sep=",")
+cervis<-stack(cervi)
+cervi.aov=aov(cervis[,1]~cervis[,2])
+anova(cervi.aov) ### produce la tavola anova
+model.tables(cervi.aov) ### produce la tavola degli effetti stimati, dato che mancano delle osservazioni il disegno non è bilanciato quindi non viene restituita la stima dell'errore standard degli effetti
+
+model.tables(cervi.aov,type="means") ### produce la tavola delle medie osservate
+#####################################
+##### rat data
+######################################
+#
+#This is Dataplot data file     RATFEED.txt
+#Weight Gain of Rats
+#Source--Hoaglin, D., Mosteller, F., and Tukey, J. (1991).
+#        Fundamentals of Exploratory Analysis of Variance.
+#        Wiley, New York, page 100.
+#Response Variable                  = Weight gain of rats
+#Number of observations             = 60 (= 10 reps x 2 amounts x 3 diets)
+#Number of variables per line image = 3
+#Order of variables per line image--
+#   Response variable = rat weight gain (in grams)
+#   Factor 1          = diet amount (1 = high, 2 = low)
+#   Factor 2          = diet type   (1 = beef, 2 = pork, 3 = cereal)
+#Statistical areas--Multifactor
+#Design type      --Randomized Block
+#      READ RATFEED.txt WG DA DT
+#
+rat<-read.table("ratfeed.txt",header=T)
+### per condurre un'anova dobbiamo trasformare in variabili factor le due variabili numeriche che definiscono i livelli dei fattori sperimentali
+rat$DA<-factor(rat$DA)
+rat$DT<-factor(rat$DT)
+#### vediamo gli effetti dell'ammontare della dieta da soli
+anova(aov(WG~DA,rat))
+##### ora vediamo solo il tipo di dieta
+anova(aov(WG~DT,rat))
+### il tipo di dieta non è significativo 
+##### vediamo cosa succede se combiniamo i due fattori in un'unica analisi
+
+anova(aov(WG~DA+DT,rat))
+##################### esempio soia
+soia<-read.table("soia.csv",header=T,sep=",")
+anova(aov(time~fert+block,soia))
+
+## c'è interazione tra blocco e fertilizzante?
+#a questa domanda non possiamo rispondere abbiamo troppe poche repliche per stimare correttamente un eventuale altro termine
+
+################ Un altro dataset su concimazione e orzo 
+#Description:
+#The data come from an a classic experiment to measure the effect of manure on the yield of barley. Six blocks of three whole plots were used, together with three varieties of barley. Each whole plot was divided into four subplots to cater for the four levels of manure: 0, 0.01, 0.02 and 0.04 tons per acre. The block and variety types are both qualitative variables and so some coding is necessary to include them into a regression model. The data form a completely randomized design.
+#There are 72 observations on four variables.
+#Variables:
+#Block The block used (coded 1, 2, 3, 4, 5, 6)
+#Variety The variety of barley (coded 1, 2 or 3)
+#Manure The amount of manure used, either 0, 0.01, 0.02 or 0.04 tons per acre. These have been coded as 0, 1, 2 and 4 respectively, and so can be treated as an ordered factor.
+#Yield The barley yield (units unknown)
+
+barley<-read.table("split-R.txt",header=T)
+#### i fattori sperimentali sono le varietà, la quantità di concime e il blocco sperimentale
+barley$Block<-factor(barley$Block)
+barley$Variety<-factor(barley$Variety)
+barley$Manure<-factor(barley$Manure,ordered=T)
+anova(aov(Yield~Manure+Variety+Block,barley))
+### vediamo se ci sono interazioni
+anova(aov(Yield~Manure+Variety+Block+Variety*Block+Manure*Variety+Manure*Block,barley))
+##### commentare il risultato

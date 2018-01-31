@@ -1,0 +1,11 @@
+###anova
+trat<-read.table("trattamenti.txt",header=T) #lettura dati
+#i valori vanno impilati e i nomi di colonna diventano etichette di trattamento
+trats<-stack(trat)
+#analisi della varianza
+anova(aov(trats[,1]~trats[,2]))
+### esempio 2 
+### dati riportati rappresentano il peso del cibo (in Kg) consumato giornalmente da un cervo adulto misurato in diversi periodi dell’anno. Verificare l’ipotesi che il consumo di cibo sia uguale in tutti i mesi esaminati. Il numero totale di cervi è 22
+cervi<-read.table("cervi.csv",header=T, sep=",")
+cervis<-stack(cervi)
+anova(aov(cervis[,1]~cervis[,2]))

@@ -1,0 +1,34 @@
+
+data(iris)
+summary(iris)
+###vettore con colore rosso per setosa, blu per versicolor e verde per virginica, costruisco un grafico con i primi 50 elementi uguali a 2 (rosso), i secondi 50 uguali a 4(blu) e gli ultimi 50 uguali a 3 (verde). Faccio questo perche' le tre specie sono raggruppate (prime 50 una specie etc.) 
+vettorecol=rep(c(2,4,3),each=50)
+plot(iris$Sepal.Length,iris$Petal.Width,xlab="Sepal Length",ylab="Petal Width",col=vettorecol,pch=20)
+#### vari modi per richiamare le variabili sepal length e petal width contenute nel dataframe iris e usarle nel plot (grafico a dispersione)
+plot(iris[,1],iris[,4])
+plot(iris[,c(1,4)])
+plot(iris$Petal.Width~iris$Sepal.Length)
+
+#### vettore dei nomi delle specie
+etic=levels(iris$Species)
+
+#### modo alternativo per costruire il grafico con un colore diverso per ogni specie
+plot(iris[,1],iris[,4], xlab=="Sepal Length",ylab="Petal Width")
+### con questa istruzione seleziono la specie 1 (setosa) creo una variabile logica che ha TRUE dove la condizione e' verificata e FALSE altrove
+w=iris$Species==etic[1]
+#### con la variabile logica seleziono le righe di iris che contengono la specie e le coloro come voglio ad esempio in rosso (col=2)
+points(iris[w,1],iris[w,4],pch=20,col=2)
+### stesso lavoro per le specie 2 e 3
+w=iris$Species==etic[2]
+points(iris[w,1],iris[w,4],pch=20,col=4)
+w=iris$Species==etic[3]
+points(iris[w,1],iris[w,4],pch=20,col=3)
+#### aggiungo la legenda
+legend("bottomright",etic,pch=20,col=c(2,4,3))
+#### oppure
+legend("bottomright",levels(iris$Species),pch=20,col=c(2,4,3))
+
+#### oppure 
+legend("topleft",levels(iris$Species),pch=20,col=c(2,4,3))
+
+#setwd("/Users/jona/Dropbox/appoggio_lezioni_bio/corso2012-13")

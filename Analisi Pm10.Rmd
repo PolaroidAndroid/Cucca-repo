@@ -72,6 +72,7 @@ summary(pm10_a)
 ```{r}
 ### PCA ANALYSIS ----
 require(ade4)
+
 names(pm10_a)
 
 #estraggo da pm10 solo le variabili numeriche da inserire nella PCA escludendo giorno mese e anno che sono da considerarsi factors

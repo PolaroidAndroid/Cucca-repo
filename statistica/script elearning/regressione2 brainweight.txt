@@ -1,0 +1,62 @@
+brain<-read.table("brainweight.txt",header=T,sep=",")
+##### dati di peso del corpo e del cervello di diverse specie animali
+### vediamo come sono strutturati i dati
+summary(brain)
+
+#vediamo che esiste un'enorme variabilità sia per il peso del corpo che per la dimensione del cervello, d'altronde stiamo osservando un insieme di animali che vanno dall'elefante africano al topo 
+#pdf("../images/brainbox.pdf")
+par(mfrow=c(1,2))
+boxplot(brain$body,main="body")
+boxplot(brain$brain,main="brain")
+#dev.off()
+###### i grafici a dispersione
+#pdf("../images/plotorig.pdf")
+par(mfrow=c(1,1))
+plot(brain$body,brain$brain,xlab="body",ylab="brain",main="original scale")
+#dev.off()
+### proviamo a trasformare entrambe le variabili su scala log
+#pdf("../images/plotlog.pdf")
+plot(log(brain$body),log(brain$brain),xlab="body",ylab="brain",main="log scale")
+#dev.off()
+#su scala log-log la relazione lineare è molto evidente
+#rifacciamo anche i boxplot
+#pdf("../images/brainbox_log.pdf")
+par(mfrow=c(1,2))
+boxplot(log(brain$body),main="log body")
+boxplot(log(brain$brain),main="log brain")
+#dev.off()
+#### verifichiamo la normalità su scala log-log
+#pdf("../images/brainqq_log.pdf")
+par(mfrow=c(1,2))
+qqnorm(log(brain$body),main="log body")
+qqline(log(brain$body),col=2)
+qqnorm(log(brain$brain),main="log brain")
+qqline(log(brain$brain),col=2)
+#dev.off()
+
+### ora creiamo un dataset con i dati log 
+brain.log<-brain
+brain.log[,2:3]=log(brain[,2:3])
+### elaboriamo il modello di regressione e verifichiamo la bontà di adattamento
+
+yy<-lm(brain~body,data=brain.log)
+### grafico dei residui
+#pdf("../images/res1.pdf")
+plot(yy,which=1)
+#dev.off()
+
+app<-brain.log[,c(2:3)]
+row.names(app)<-as.character(brain.log[,1])
+yy<-lm(brain~body,data=app)
+### grafico dei residui
+#pdf("../images/res2.pdf")
+plot(yy,which=1)
+#dev.off()
+#residui standardizzati
+#pdf("../images/res3.pdf")
+plot(yy,which=3)
+#dev.off()
+### distanza di cook
+#pdf("../images/cook.pdf")
+plot(yy,which=4)
+#dev.off()

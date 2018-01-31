@@ -1,0 +1,117 @@
+#################
+########## Introduction to R for phytoplankton community ecology
+########## Scuola di Dottorato in Ecologia e Cambiamenti Climatici
+########## Giorno 1: ESERCITAZIONE 1
+#################
+
+##########################
+##### Gioco del lotto
+##########################
+
+# Dobbiamo lavorare con il dataset "storico.txt"
+# Cambiamo la directory di lavoro in modo tale
+# da poter importare il file in modo semplice
+
+
+###########
+#### STEP 1: importazione dei dati mediante il comando read.table
+########### 
+
+help("read.table")
+
+# file, header = FALSE, sep = "", quote = "\"'",  dec = ".", 
+# file : nome file
+# header: le colonne hanno il nome??? se sì, header=T
+# sep: quale è il separatore? ",", ";", "", "\t"
+
+# leggiamo il file storico
+
+storico.tot=read.table("storico.txt",header=F,sep="\t",dec='.')
+
+# e cerchiamo di capire come è fatto il file
+
+dim(storico.tot)
+str(storico.tot)
+names(storico.tot)
+mode(storico.tot)
+
+# per comodità, rinominiamo le colonne del dataframe
+
+colnames(storico.tot)=c("data","ruota","n1","n2","n3","n4","n5")
+storico.tot[1:5,]
+
+### ooppssss come ha interpretato la ruota di Napoli!!!!!!!!
+### leggiamo meglio il file, specificando che NA non è missing
+### ma la sigla di Napoli!
+
+storico.tot=read.table("storico.txt",header=F,sep="\t",dec='.',na.strings="")
+colnames(storico.tot)=c("data","ruota","n1","n2","n3","n4","n5")
+storico.tot[1:5,]
+
+## ok, meglio! possiamo continuare!
+
+
+# selezioniamo soltanto le colonne di tipo numerico
+# per fare le selzioni in modo più semplice
+
+storico=storico.tot[,3:ncol(storico.tot)]
+
+###########
+#### Cerchiamo di rispondere alle seguenti domande
+###########
+
+###  Punto 0: Il numero 13 è mai uscito?
+
+any(storico==13)
+### e quando è uscito?
+which(storico==13,arr.ind=T)
+
+### Punto 1: Si è mai verificato l'ambo (13,23)?
+
+apply(storico.tot,1,trova.vettore,c(13,26))
+which(apply(storico.tot,1,trova.vettore,c(13,26))==2)
+
+# vediamo su quali ruote e in quali date
+
+ambo=storico.tot[which(apply(storico.tot,1,trova.vettore,c(13,26))==2),]
+
+# quante volte sulla ruota di Bari?
+
+sum(ambo$ruota=="BA")
+
+# e in che data?
+
+ambo[ambo$ruota=="BA",]
+
+##### Punto 2: quanto avrebbe vinto/perso il Signor X se avesse giocato 1 solo euro sempre e solo sullo stesso ambo secco su tutte le ruote cominciando dalla notte dei tempi del gioco del Lotto?
+######
+
+vincita=sum(apply(storico.tot,1,trova.vettore,c(13,26)))
+perdita=nrow(storico)-vincita
+
+######
+### Punto 3: quante estrazioni sono state effettuate sulla sola ruota di Roma?
+######
+
+sum(storico.tot$ruota=="RM",na.rm=T)
+# oppure ...
+table(storico.tot$ruota)
+
+######
+### Punto 4: creare un data.frame denominato Roma che contiene le estrazioni della sola ruota di Roma
+######
+
+roma=storico.tot[which(storico.tot$ruota=="RM"),]
+dim(roma)
+str(roma)
+
+######
+### Punto 5: sogniamo una cinquina e verifichiamo se avremmo mai vinto
+######
+
+
+### e se utilizzassimo la nostra funzioncina trova.vettore???
+
+cinquina=apply(storico,1,trova.vettore,c(55,46,63,26,35))
+which(cinquina==5)
+

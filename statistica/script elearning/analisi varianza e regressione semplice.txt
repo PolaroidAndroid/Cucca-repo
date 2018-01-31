@@ -1,0 +1,15 @@
+data(iris)
+summary(iris)
+anovairis1=aov(iris$Sepal.Length~iris$Species)
+qqnorm(residuals(anovairis1))
+qqline(residuals(anovairis1))
+shapiro.test(residuals(anovairis1))
+anova(anovairis1)
+### anova com modello di regressione
+summary(lm(Sepal.Length~Species,data=iris))
+
+#### c'è un'intercetta diverse per ogni specie
+summary(lm(Sepal.Length~Species+Sepal.Width,data=iris))
+
+#### l'inclinazione sembra essere la stessa per tutte le specie
+summary(lm(Sepal.Length~Species*Sepal.Width,data=iris))
