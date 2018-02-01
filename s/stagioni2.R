@@ -257,48 +257,49 @@ summary(corr)
 
 mod1<-lm(media~.,data=data_hills)
 summary(mod1)
+par(mfrow=c(2,2))
 plot(mod1)
+par(mfrow=c(1,1))
 qqnorm(mod1$residuals)
 qqline(mod1$residuals,col=2)
 
 
 mod1s=step(mod1,direction="both")
 summary(mod1s)
+par(mfrow=c(2,2))
 plot(mod1s)
 
-<<<<<<< HEAD
 # mod 2 media+massima
-
-
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 summary(mod2)
 # l'r2 sembra buono qui 0.83
-
-par(mfrow=c(1,1))
 par(mfrow = c(2,2))
-
 plot(mod2)
-# mi sembra che ci siano dei valori anomali, 48 334 e 50 
+# mi sembra che ci siano dei valori anomali, 48 334 e 50 <- LUI IN AUTOMATICO SI SEGNALA I TRE VALORI PIU' ESTREMI 
+# NON E' DETTO CHE SIANO VALORI ANOMALI
 # per  residual vs fitted: la nuvola c'è  ed è abbastanza compatta e non proprio del tutto centrata e c'è una 
 # lieve nello smooth ...che dovrebbe essere al centro, andando così in alto mi fa pensare a qualcosa di logaritmico
+# SEMBREREBBE ESSERCI UNA LEGGERA ETEROSCHEDASTICITA'. MA PER QUELLO CHE DOVETE FARE VOI VA BENE. AVENDO DELLE VARAIBILI FATTORIALI
+# PLOTTA ANCHE I RESIDUI vs VARAIBILE FATTORIALE (vento e stagione)
 # magari sto a di una cazzata magari no...è la pioggia?)
 # nel normal q-q sembrano nomarli sempre eccetto quei due tre valori anomali
+# MAGARI AVERE DEI RESIDUI COSi' NORMALI
 # negli standardizzati/fitted c'è sempre una bella nuvola ma c'è sempre questa 
 # retta che sembra un logaritmo..quindi direi che non sono omoschedastici, altrimenti dovrebbe essere
 # dritta la retta 
+# SE VUOI VEDERE LA DISTANZA DI COOK FAI plot(mod1, which = 4)
 # nella leverage è palese che i valori sono oltre la distanza di cook quindi qualcosa mi influenza il tutto
 # mi viene da dire che nemmeno questo va bene 
-=======
+par(mfrow=c(1,1))
 
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 
->>>>>>> 57408756e0d5e19952aabf0bbee80484f6a71006
 
 summary(mod2)
 
-par(mfrow)
 mod2s=step(mod2,direction="both")
 summary(mod2s)
+par(mfrow=c(2,2))
 plot(mod2s)
 # anche con la stepwise ho problemi nei residui, i valori anomali sono sempre gli stessi
 # qui si vede nella leverage un "distacco in due nuvole" non so se ha un significato o meno
@@ -393,7 +394,7 @@ plot(mod6s)
 # ricorda di provare il modello standardizzando le variabili!!!!
 
 
-
+#NON TROVO LA PARTE CON I GAM
 
 
 
