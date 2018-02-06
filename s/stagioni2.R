@@ -46,6 +46,20 @@ table(pm10_a$Stagione)
 
 summary(pm10_a)
 
+#boxplot
+
+
+boxplot(data_hills$media~data_hills$stagione,col=col_vector,main="Concentrazioni medie di Pm10")
+boxplot(data_hills$max~data_hills$stagione,col=col_vector, main="Concentrazioni massime di Pm10 ")
+
+plot(data_hills$dv,data_hills$media,xlab="Direzione del vento",ylab="Concentrazione Pm10", col=col_vector)
+
+
+# grafico a coppie
+
+pairs(data_pca,upper.panel =panel.smooth,lower.panel=panel.cor,diag.panel = panel.hist)
+
+
 ### PCA ANALYSIS ----
 require(ade4)
 names(pm10_a)
@@ -279,6 +293,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(2,2))
 
 plot(mod2)
+
 # mi sembra che ci siano dei valori anomali, 48 334 e 50 
 # per  residual vs fitted: la nuvola c'è  ed è abbastanza compatta e non proprio del tutto centrata e c'è una 
 # lieve nello smooth ...che dovrebbe essere al centro, andando così in alto mi fa pensare a qualcosa di logaritmico
@@ -291,18 +306,49 @@ plot(mod2)
 # mi viene da dire che nemmeno questo va bene 
 =======
 
+  
+####modelli che non usiamo ----
+
+#prima di fare la stepwise elimina mediana e max
+data_hills2 <- data_hills[c(1,4:11)]
+
+
+# a giudicare da questo credo che eliminerò max e mediana e provo a comparare 
+# max e media con due modelli differenti in quanto sono sempre correlate e vedo
+# se cambia qualcosa 
+
+
+mod2 <- lm(media ~ tmp + vv + dv + rdz + pgg + umr + prs + stagione, data = data_hills)
+mod2bis <- lm(media ~ tmp + vv + rdz + pgg + umr + prs, data = data_hills)
+summary(mod2)
+summary(mod2bis)
+
+
+reg2 <- lm(media ~ stagione, data = data_hills)
+summary(reg2)
+data_hills2$stagione<-as.factor(data_hills2$stagione)
+#così cambi il corner point
+type2 <- relevel(data_hills2$stagione, ref = "Summer")
+
+reg2.bis <- lm(media ~ type2, data = data_hills)
+summary(reg2.bis)
+#La stepwise serve a selezionare le variabili che spiegano di
+#più. Chiaramente mettendo sia dv che stagione stai aggiungendo #
+# tanta carne al fuoco e hai poche osservazioni 
+#per alcune direzioni. Vediamo un attimino come si comporta
+
+
+#modello che usiamo!!!!---- 
+  
+  
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
-
->>>>>>> 57408756e0d5e19952aabf0bbee80484f6a71006
-
 summary(mod2)
 
 par(mfrow)
 mod2s=step(mod2,direction="both")
 summary(mod2s)
 plot(mod2s)
-# anche con la stepwise ho problemi nei residui, i valori anomali sono sempre gli stessi
-# qui si vede nella leverage un "distacco in due nuvole" non so se ha un significato o meno
+
 
 qqnorm(mod2s$residuals)
 qqline(mod2s$residual, col=2)
@@ -315,83 +361,11 @@ acf(mod2s$residuals)
 cor(data_hills[,c(1:9)])
 
 
-#direi che questo è il modello migliore. Se ti va provati a vedere come funzionao i gam. Ti passo lo zuur appena posso. 
-# sono un po' perplesso dal fatto che la max si prenda tutta la variabilità però se la prof vi ha detto di metterla lo sa 
-# meglio lei di sicuro
+#direi che questo è il modello migliore. Se ti va provati a vedere come funzionao i gam. T
 # pacchetto mgcv 
-
 # che cosa vedi in questo modello???
 # che ti dice l'output???
 
-#iniziate a buttare giu anche il testo
-
-
-mod4<-lm(media~tmp+vv+dv+umr+stagione,data=data_hills)
-summary(mod4)
-anova(mod4,mod2s)
-
-# mod 3 max + mediana
-mod3<-lm(max~tmp+mediana+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
-summary(mod3)
-# anche qui l' r2 è buono 0.73
-
-plot(mod3)
-# per il residual vs fitted qui va un pò meglio
-# i valori anomali qui sono 335, 78, 48
-# il normal qq un pò peggio 
-# mentre finalmente non ho più eteroschedasticità con la leverage
-# cook rimane sempre un pò un panico
-
-
-mod3s=step(mod3,direction="both")
-summary(mod3s)
-plot(mod3s)
-# pure con la stepwise mi sembra che più o meno siamo li...
-
-qqnorm(mod3s$residuals)
-qqline(mod3s$residuals,col=2)
-
-# mod 4 mediana
-
-mod4<-lm(mediana~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
-summary (mod4)
-plot(mod4)
-
-mod4s=step(mod4,direction="both")
-summary(mod4s)
-plot(mod4s)
-# r2 bassino e valori anomali 335,334,50
-# i residui hanno uno smooth inverso a quello dei modelli prima
-
-# mod 5 media
-
-mod5<-lm(media~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
-summary(mod5)           
-plot(mod5)           
-
-mod5s=step(mod5,direction="both")
-summary(mod5s)
-plot(mod5s)
-# anchce qui r2 basso, e residui inversi con valori anomali 335,334,50
-
-# mod 6 max 
-
-mod6<-lm(max~tmp+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)     
-summary(mod6)
-plot(mod6)
-
-mod6s=step(mod6,direction="both")
-summary(mod6s)
-plot(mod6s)
-
-# dai residui qui abbiamo 78 50 e 335 che sono anomali
-# smooth sempre inverso a quello di prima con un'inclinazione specifica.
-
-# se dovessi scegliere un modello sceglierei il 3° perchè ha un buon r2 e non mi
-# sembra messo malissimo con i residui...
-# ma sicuro non ho capito nulla e mi redarguirai per bene ps. lo so che mi odi
-
-# ricorda di provare il modello standardizzando le variabili!!!!
 
 
 #STANDARDIZZO LE VARIABILI ----
@@ -402,6 +376,7 @@ data_scaled<-scale(data_media)
 data_scaled<-as.data.frame(data_scaled)
 modscale<-lm(media~tmp+max+vv+rdz+pgg+umr+prs,data=data_scaled)
 plot(modscale)
+summary(modscale)
 AIC(modscale)
 # TEST SU RESIDUI ----
 library(nortest)
@@ -413,7 +388,7 @@ summary(modscale)
 modscale_s=step(modscale,direction="both")
 summary(modscale_s)
 plot(modscale_s)
-
+plot(modscale_s$residuals)
 AIC(modscale_s)
 
 shapiro.test(modscale_s$residuals)
@@ -450,3 +425,72 @@ summary(e)
 
 
 
+f<-gam(media~s(umr,by=stagione),data=data_hills)
+summary(f)
+plot(f)
+par(nfrow=(2,2))
+
+gamp<-gam(max~s(pgg,by=stagione),data=data_hills)
+summary(gamp)
+plot(gamp)
+
+
+names(data_hills)
+
+g<-gam(media~ s(umr)+s(tmp)+s(pgg)+s(rdz)+s(vv)+s(prs),data=data_hills)
+summary(g)
+plot(g)
+gam.check(gamp)
+g2<-predict(g,se=TRUE)
+
+
+
+
+# Verifico la pioggia ----
+
+boxplot(data_pca$pgg)
+plot(data_pca$pgg,type="l")
+pgg_l<-data_hills$pgg_l<-log(data_pca$pgg-1)
+
+
+str(pgg_l)
+
+
+plot(data_hills$max,data_hills$pgg,type="l")
+plot(data_hills$max,data_hills$pgg_l,type="l")
+
+
+#zuur mio amuuur ----
+
+
+dotchart(data_pca$media,groups=factor(data_hills$stagione))
+
+
+str(pm10)
+names(pm10)
+summary(pm10)
+
+
+
+# medie e norma di legge ----
+
+data_hills$normaL<-ifelse(data_hills$media<50.000,"low","high")
+
+data_hills$normaL<-as.factor(data_hills$normaL)
+
+plot(data_hills$media~data_hills$normaL)
+
+pm10$data2 <- seq(1,365,1)
+
+
+ggplot(pm10, aes(x = data2)) +
+  geom_path(aes(y = media), color = "red") +
+  geom_path(aes(y = mediana), color = "blue") +
+  geom_path(aes(y = max), color = "green")
+
+
+
+
+
+plot()
+cor(data_pca)
