@@ -43,6 +43,7 @@ pm10_a$Stagione<- k
 table(pm10_a$Stagione)
 
 
+
 summary(pm10_a)
 
 ### PCA ANALYSIS ----
@@ -393,7 +394,59 @@ plot(mod6s)
 # ricorda di provare il modello standardizzando le variabili!!!!
 
 
+#STANDARDIZZO LE VARIABILI ----
 
+data_media<-data_pca[,-2]
+data_scaled<-scale(data_media)
+
+data_scaled<-as.data.frame(data_scaled)
+modscale<-lm(media~tmp+max+vv+rdz+pgg+umr+prs,data=data_scaled)
+plot(modscale)
+AIC(modscale)
+# TEST SU RESIDUI ----
+library(nortest)
+ad.test(modscale$residuals)
+
+shapiro.test(modscale$residuals)
+summary(modscale)
+
+modscale_s=step(modscale,direction="both")
+summary(modscale_s)
+plot(modscale_s)
+
+AIC(modscale_s)
+
+shapiro.test(modscale_s$residuals)
+
+# TENTATIVO GAM ----
+
+library(mgcv)
+
+require(mgcv)
+
+a<-gam(max~s(pgg,by=vv),data=data_media)
+plot(a,pages=1)
+summary(a)
+
+
+b<-gam(max ~ s(tmp,by=vv),data=data_media)
+plot(b,pages=1)
+summary(b)
+
+
+c<-gam(media~ s(tmp,by=rdz),data=data_media)
+plot(c,page=1)
+summary(c)
+
+
+d<-gam(media~s(tmp,by=vv),data=data_scaled)
+plot(d,page=1)
+summary(d)
+
+
+e<-gam(media~s(umr,by=pgg),data=data_scaled)
+plot(e,page=1)
+summary(e)
 
 
 
