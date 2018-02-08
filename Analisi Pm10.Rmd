@@ -1,12 +1,12 @@
 ---
-title: Concentrazione del particolato atmosferico (Particulate matter,PM10) nell’aria della città di Taranto (2009)in relazione alle condizioni ambientali
+title: Concentrazione del particolato atmosferico (Particulate matter,PM10) nell’aria della città di Taranto in relazione alle condizioni ambientali
 
 author: "Giorgia Desantis, Alessandro Mori, Eros Quésada,Lorenzo Panunzio,Cristiana Poggi"
 output: pdf_document
 ---
 
 
-![Caption for the picture.](Cucca-repo/statistica/ciaone.jpg)
+![Caption](ciaone.jpg)
 
 
 ### Indice
@@ -44,15 +44,15 @@ Il particolato atmosferico viene notoriamente classificato in base al diametro a
 Le origini del particolato atmosferico sono varie e se ne riconoscono di antropogeniche e di naturali. Tra i processi antropici che emettono particolato atmosferico nell’aria ricordiamo: la combustione di carburante per veicoli (sia diesel che benzina), i combustibili solidi (carbone, lignite e biomassa), il riscaldamento domestico, le attività industriali (come costruzioni, miniere, manifattura di cemento, ceramica e mattoni, fusione), l’erosione del manto stradale a causa del traffico, le abrasioni di freni e pneumatici, i lavori in grotte e miniere (APAT, 2007). 
 
 ##1.3 Effetti sulla salute umana 
-Gli effetti dell’inquinamento atmosferico da PM10 sulla salute umana sono stati oggetto di intensi studi negli ultimi anni, (Hueglin et al., 2005). L'esposizione a particolato atmosferico (PM10) è stata associata ad aumenti della mortalità e dei ricoveri ospedalieri dovuti a malattie respiratorie e cardiovascolari. Gli effetti sono stati osservati per esposizioni a livelli molto bassi di concentrazione di PM10  e non è chiaro se esista una concentrazione soglia per il particolato al di sotto della quale non sono probabili effetti sulla salute. Studi in vitro ed in vivo su animali ed esseri umani hanno rivelato potenti effetti pro – infiammatori  che coinvolgono cellule epiteliali polmonari. Il particolato atmosferico una volta nel polmone viene assorbito dalle cellule epiteliali ed attaccato dai macrofagi. L’attacco dei macrofagi alveolari instaura la secrezione da parte delle cellule del polmone di citochinine e mediatori immunitari nel sangue che stimolano l’attivazione dei globuli bianchi (neutrofili e  linfociti), (Brunekreef e Holgate, 2002). Nel breve periodo l’infiammazione porta ad un danno tissutale acuto conosciuto come metaplasia polmonare (Terzano, 2006), rilevabile per la presenza di proteine come il recettore del fattore di crescita epidermico (EGFR) che evidenziano tentativi di riparazione dell'organo, e produzione continua di muco che porta ad un restringimento del lume polmonare. Attraverso l'attivazione delle vie di segnalazione dello stress dall'epitelio ai microvasi polmonari, vengono generati fattori che influenzano la coagulazione del sangue il che può condurre a disturbi circolatori come l’aritmia, (Brunekreef e Holgate, 2002). Nel ’98 l’OMS ha indicato le elevate concentrazioni di PM10 in otto città italiane (media pesata 52.6 g/m3), come causa di 3500 decessi, (APAT, 2007). 
+Gli effetti dell’inquinamento atmosferico da PM10 sulla salute umana sono stati oggetto di intensi studi negli ultimi anni, (Hueglin et al., 2005). L'esposizione a particolato atmosferico (PM10) è stata associata ad aumenti della mortalità e dei ricoveri ospedalieri dovuti a malattie respiratorie e cardiovascolari. Gli effetti sono stati osservati per esposizioni a livelli molto bassi di concentrazione di PM10  e non è chiaro se esista una concentrazione soglia per il particolato al di sotto della quale non sono probabili effetti sulla salute. Studi in vitro ed in vivo su animali ed esseri umani hanno rivelato potenti effetti pro – infiammatori  che coinvolgono cellule epiteliali polmonari. Il particolato atmosferico una volta nel polmone viene assorbito dalle cellule epiteliali ed attaccato dai macrofagi. L’attacco dei macrofagi alveolari instaura la secrezione da parte delle cellule del polmone di citochinine e mediatori immunitari nel sangue che stimolano l’attivazione dei globuli bianchi (neutrofili e  linfociti), (Brunekreef e Holgate, 2002). Nel breve periodo l’infiammazione porta ad un danno tissutale acuto conosciuto come metaplasia polmonare (Terzano, 2006), rilevabile per la presenza di proteine come il recettore del fattore di crescita epidermico (EGFR) che evidenziano tentativi di riparazione dell'organo, e produzione continua di muco che porta ad un restringimento del lume polmonare. Attraverso l'attivazione delle vie di segnalazione dello stress dall'epitelio ai microvasi polmonari, vengono generati fattori che influenzano la coagulazione del sangue il che può condurre a disturbi circolatori come l’aritmia, (Brunekreef e Holgate, 2002). Nel ’98 l’OMS ha indicato le elevate concentrazioni di PM10 in otto città italiane (media pesata 52.6 g/m3), come causa di 3500 decessi, (APAT, 2007). 
 
 ##1.4 Legislazione
 	In numerosi Paesi, le concentrazioni del particolato atmosferico di entrambe le categorie dimensionali vengono misurate regolarmente da decenni. In Italia, con poche eccezioni (Firenze, ad esempio), solo il PM10 è misurato routinariamente in centraline fisse di monitoraggio, poiché esso è considerato una buona misura del complesso mix di inquinanti solidi e gassosi creati dal trasporto, dalla combustione di carburanti per veicoli e dalla produzione di energia elettrica e termica, (APAT, 2007; Gasparinetti, 2015). 
-	Alla luce delle conseguenze sanitarie dovute a concentrazioni superiori alla concentrazione considerata naturale per il PM10 (6 μg/m3), su indicazione dell’Organizzazione mondiale della sanità (OMS), il Consiglio Europeo ha emanato la Direttiva 1999/30/EC (Unione Europea, 1999) nella quale vengono introdotti due differenti limiti per il PM10 per la protezione della salute umana: un limite per la media giornaliera di 50 μg/m3, da non superarsi per più di sette volte in un anno, e uno per quella annuale, 40 μg/m3, (Lena e Pirrollo, 2010). Questi limiti sono stati successivamente confermati nella Direttiva 2008/50/CE (Gazzetta Ufficiale dell’Unione Europea, 2008) 
+	Alla luce delle conseguenze sanitarie dovute a concentrazioni superiori alla concentrazione considerata naturale per il PM10 (6 g/m3), su indicazione dell’Organizzazione mondiale della sanità (OMS), il Consiglio Europeo ha emanato la Direttiva 1999/30/EC (Unione Europea, 1999) nella quale vengono introdotti due differenti limiti per il PM10 per la protezione della salute umana: un limite per la media giornaliera di 50 μg/m3, da non superarsi per più di sette volte in un anno, e uno per quella annuale, 40 g/m3, (Lena e Pirrollo, 2010). Questi limiti sono stati successivamente confermati nella Direttiva 2008/50/CE (Gazzetta Ufficiale dell’Unione Europea, 2008) 
 
 ## 1.5 Obiettivi della ricerca. 
 
-Numerosi studi hanno indagato il potenziale ruolo dei fattori meteorologici, nella diminuzione della concentrazione del particolato atmosferico in alcune città e zone rurali europee  (i.e: Sanchez – Reina et al., 2006; Olszowsky, 2015;), con esiti positivi: la concentrazione di particolato atmosferico con diametro aereodinamico 10 μg (PM10) viene influenzata dalla presenza di precipitazioni atmosferiche e varia a seconda della direzione del vento. Nella presente ricerca viene esaminata la concentrazione di PM10 in una delle città più inquinate d’Italia, Taranto. 
+Numerosi studi hanno indagato il potenziale ruolo dei fattori meteorologici, nella diminuzione della concentrazione del particolato atmosferico in alcune città e zone rurali europee  (i.e: Sanchez – Reina et al., 2006; Olszowsky, 2015;), con esiti positivi: la concentrazione di particolato atmosferico con diametro aereodinamico 10 g (PM10) viene influenzata dalla presenza di precipitazioni atmosferiche e varia a seconda della direzione del vento. Nella presente ricerca viene esaminata la concentrazione di PM10 in una delle città più inquinate d’Italia, Taranto. 
 Gli obiettivi della seguente ricerca sono....
 è indagare cosa regola la conc di pm10
 
@@ -329,6 +329,7 @@ qqnorm(mod2s$residuals)
 
 
 plot(mod2s$residuals~data_hills$dv)
+data_hills$stagione <- factor(data_hills$stagione)
 plot(mod2s$residuals~data_hills$stagione)
 acf(mod2s$residuals)
 cor(data_hills[,c(1:9)])
@@ -387,14 +388,60 @@ require(mgcv)
 data_hills<-(pm10_a[1:10])
 data_hills$stagione<-pm10_a$Stagione
 names(data_hills)
+summary(data_hills)
 
-g<-gam(media~ s(umr)+s(tmp)+s(pgg)+s(rdz)+s(vv)+s(prs),data=data_hills)
-summary(g)
+hist(log(data_hills$pgg+1))
+data_hills$l.pgg <- log(data_hills$pgg + 1)
+
+data_hills$day <- seq(1,365,1)
+
+g<-gam(media ~ max + s(day) + s(umr) + s(tmp) + s(pgg) + s(rdz) + s(vv) + s(prs) + dv, data=data_hills) # meglio questo
+g1<-gam(media ~ max + umr + s(tmp) + s(l.pgg) + s(rdz) + vv + s(prs) + stagione + dv, data=data_hills)
+summary(g); summary(g1)
 plot(g)
-
+acf(g$residuals)
 
 gam.check(g)
-g2<-predict(g,se=TRUE)
+g2<-predict(g,se=TRUE, type = "response")
+
+plotdata <- plot(g, pages = 1)
+str(plotdata)
+
+# Convert it in a dataframe
+dati_plot <- data.frame(day = plotdata[[1]]$x, fit = plotdata[[1]]$fit,
+                        se= plotdata[[1]]$se)
+
+plot(dati_plot$day, dati_plot$fit)
+
+dati_plot$day <- as.integer(dati_plot$day)
+
+# Calculate the CI
+dati_plot$upr <- dati_plot$fit + (1.96 * dati_plot$se)
+dati_plot$lwr <- dati_plot$fit - (1.96 * dati_plot$se)
+
+data_hills2 <- merge(dati_plot, data_hills, by = "day", all.y = TRUE)
+
+ggplot(data_hills2, aes(x = day, y = fit)) +
+  geom_hline(aes(yintercept = 0), linetype = 6, color = "red") +
+  geom_smooth(aes(ymin = lwr, ymax = upr), fill = "gray80", color = "black", size = 1, stat = "identity")
+
+data_hills2$fit2 <- g2$fit
+data_hills2$se2 <- g2$se.fit
+
+data_hills2$upr2 <- data_hills2$fit2 + (1.96 * data_hills2$se2)
+data_hills2$lwr2 <- data_hills2$fit2 - (1.96 * data_hills2$se2)
+
+
+ggplot(data_hills2, aes(x = day)) +
+  geom_point(aes(y = fit2), color = "black") + 
+  geom_line(aes(y = fit2), color = "black", linetype = "twodash") + 
+  geom_point(aes(y = media), color = "red") +
+  geom_line(aes(y = media), color = "red", linetype = "solid") +
+  geom_errorbar(aes(ymin = lwr2, ymax = upr2), width = .2, color = "grey40")
+
+
+
+
 
 # QUESTO SOPRA è QUELLO VERO GLI ALTRI SOTTO PER CAZZARARE
 data_media<-data_pca[,-2]
@@ -431,8 +478,8 @@ plot(e,page=1)
 summary(e)
 
 
-
-f<-gam(media~s(umr,by=stagione),data=data_hills)
+data_hills$stagione <- factor(data_hills$stagione)
+f<-gam(media~s(umr, by = stagione),data=data_hills)
 summary(f)
 plot(f)
 
