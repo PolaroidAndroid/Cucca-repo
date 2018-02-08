@@ -2,7 +2,7 @@
 title: Concentrazione del particolato atmosferico (Particulate matter,PM10) nell’aria della città di Taranto (2009)in relazione alle condizioni ambientali
 
 author: "Giorgia Desantis, Alessandro Mori, Eros Quésada,Lorenzo Panunzio,Cristiana Poggi"
-output: pdf_document
+output: word_document
 ---
 
 
@@ -20,56 +20,59 @@ output: pdf_document
 2) Materiali e metodi
 2.1 I dati
 2.2 Analisi esplorativa
+2.2.1 Diagrammi,Box plot,Grafici di dispersione a coppie
+2.2.2 Analisi delle componenti principali (ACP o PCA)
 2.3 Analisi statistica
-3) Risultati 
-4) Conclusione
-5) Bibliografia
+2.3.1 Regressione multipla
+2.3.2 GAM
+3) Conclusione
+4) Bibliografia
 
 
-shshsh
+
 
 ### 1) Introduzione
 
 
 Negli ultimi decenni diversi studi di stampo epidemiologico e tossicologico hanno indicato  l’inquinamento atmosferico come responsabile di effetti avversi sulla salute dell’uomo e dell’ambiente, (APAT, 2007). Le evidenze scientifiche hanno documentato un’ampia gamma di esiti sanitari e ambientali negativi dovuti alla presenza di particolato atmosferico (Particulate matter, PM) nell’aria.  La presenza di particolato atmosferico nell’aria è infatti considerata la causa di irritazioni dell’apparato respiratorio fino al tumore al polmone, e la concausa dei cambiamenti climatici (Quarol et al., 2001).
 
-##1.1 Il particolato atmosferico 
+####1.1 Il particolato atmosferico 
 Le particelle costituenti il PM variano per composizione, origine e dimensione, (APAT, 2007). Il particolato atmosferico è una miscela complessa di particelle (carbonio, ammonio, nitrati, solfiti, polveri minerali, elementi in traccia e acqua), (Hueglin et al., 2005), le cui sostanze possono presentarsi miscelate allo stato condensato (solido o liquido).  
 Il particolato atmosferico viene notoriamente classificato in base al diametro aerodinamico delle particelle che lo costituiscono, poiché da questa caratteristica dipende il tempo di sospensione e quindi la permanenza nell’aria, (APAT, 2007): 
 
 •	PM10 : particelle di diametro aereodinamico inferiore ai 10 micron, raggiungono la parte sommitale del sistema respiratorio e, parzialmente, i polmoni. Le precipitazioni rimuovono queste particelle dall’aria dopo poche ore dalla loro emissione. 
 •	PM2.5: particelle di diametro aereodinamico inferiore ai 2.5 micron, sono le più pericolose poiché penetrano a fondo nei polmoni e vi permangono. Le precipitazioni non rimuovono considerevolmente dall’aria queste particelle, così che esse possono permanere in atmosfera per giorni o addirittura settimane dopo la loro emissione. 
 
-##1.2 Origini del particolato atmosferico
+####1.2 Origini del particolato atmosferico
 Le origini del particolato atmosferico sono varie e se ne riconoscono di antropogeniche e di naturali. Tra i processi antropici che emettono particolato atmosferico nell’aria ricordiamo: la combustione di carburante per veicoli (sia diesel che benzina), i combustibili solidi (carbone, lignite e biomassa), il riscaldamento domestico, le attività industriali (come costruzioni, miniere, manifattura di cemento, ceramica e mattoni, fusione), l’erosione del manto stradale a causa del traffico, le abrasioni di freni e pneumatici, i lavori in grotte e miniere (APAT, 2007). 
 
-##1.3 Effetti sulla salute umana 
+####1.3 Effetti sulla salute umana 
 Gli effetti dell’inquinamento atmosferico da PM10 sulla salute umana sono stati oggetto di intensi studi negli ultimi anni, (Hueglin et al., 2005). L'esposizione a particolato atmosferico (PM10) è stata associata ad aumenti della mortalità e dei ricoveri ospedalieri dovuti a malattie respiratorie e cardiovascolari. Gli effetti sono stati osservati per esposizioni a livelli molto bassi di concentrazione di PM10  e non è chiaro se esista una concentrazione soglia per il particolato al di sotto della quale non sono probabili effetti sulla salute. Studi in vitro ed in vivo su animali ed esseri umani hanno rivelato potenti effetti pro – infiammatori  che coinvolgono cellule epiteliali polmonari. Il particolato atmosferico una volta nel polmone viene assorbito dalle cellule epiteliali ed attaccato dai macrofagi. L’attacco dei macrofagi alveolari instaura la secrezione da parte delle cellule del polmone di citochinine e mediatori immunitari nel sangue che stimolano l’attivazione dei globuli bianchi (neutrofili e  linfociti), (Brunekreef e Holgate, 2002). Nel breve periodo l’infiammazione porta ad un danno tissutale acuto conosciuto come metaplasia polmonare (Terzano, 2006), rilevabile per la presenza di proteine come il recettore del fattore di crescita epidermico (EGFR) che evidenziano tentativi di riparazione dell'organo, e produzione continua di muco che porta ad un restringimento del lume polmonare. Attraverso l'attivazione delle vie di segnalazione dello stress dall'epitelio ai microvasi polmonari, vengono generati fattori che influenzano la coagulazione del sangue il che può condurre a disturbi circolatori come l’aritmia, (Brunekreef e Holgate, 2002). Nel ’98 l’OMS ha indicato le elevate concentrazioni di PM10 in otto città italiane (media pesata 52.6 g/m3), come causa di 3500 decessi, (APAT, 2007). 
 
-##1.4 Legislazione
+####1.4 Legislazione
 	In numerosi Paesi, le concentrazioni del particolato atmosferico di entrambe le categorie dimensionali vengono misurate regolarmente da decenni. In Italia, con poche eccezioni (Firenze, ad esempio), solo il PM10 è misurato routinariamente in centraline fisse di monitoraggio, poiché esso è considerato una buona misura del complesso mix di inquinanti solidi e gassosi creati dal trasporto, dalla combustione di carburanti per veicoli e dalla produzione di energia elettrica e termica, (APAT, 2007; Gasparinetti, 2015). 
 	Alla luce delle conseguenze sanitarie dovute a concentrazioni superiori alla concentrazione considerata naturale per il PM10 (6 μg/m3), su indicazione dell’Organizzazione mondiale della sanità (OMS), il Consiglio Europeo ha emanato la Direttiva 1999/30/EC (Unione Europea, 1999) nella quale vengono introdotti due differenti limiti per il PM10 per la protezione della salute umana: un limite per la media giornaliera di 50 μg/m3, da non superarsi per più di sette volte in un anno, e uno per quella annuale, 40 μg/m3, (Lena e Pirrollo, 2010). Questi limiti sono stati successivamente confermati nella Direttiva 2008/50/CE (Gazzetta Ufficiale dell’Unione Europea, 2008) 
 
-## 1.5 Obiettivi della ricerca. 
+####1.5 Obiettivi della ricerca. 
 
-Numerosi studi hanno indagato il potenziale ruolo dei fattori meteorologici, nella diminuzione della concentrazione del particolato atmosferico in alcune città e zone rurali europee  (i.e: Sanchez – Reina et al., 2006; Olszowsky, 2015;), con esiti positivi: la concentrazione di particolato atmosferico con diametro aereodinamico 10 μg (PM10) viene influenzata dalla presenza di precipitazioni atmosferiche e varia a seconda della direzione del vento. Nella presente ricerca viene esaminata la concentrazione di PM10 in una delle città più inquinate d’Italia, Taranto. 
-Gli obiettivi della seguente ricerca sono....
-è indagare cosa regola la conc di pm10
-
+Numerosi studi hanno indagato il potenziale ruolo dei fattori meteorologici, nella diminuzione della concentrazione del particolato atmosferico in alcune città e zone rurali europee  (i.e: Sanchez – Reina et al., 2006; Olszowsky, 2015;), con esiti positivi: la concentrazione di particolato atmosferico con diametro aereodinamico 10 μg (PM10) viene influenzata dalla presenza di precipitazioni atmosferiche e varia a seconda della direzione del vento. Nella presente ricerca viene esaminata la concentrazione di PM10 in una delle città più inquinate d’Italia, Taranto. L'obbiettivo della ricerca è quello di indagare la variazione delle concentrazioni di PM10 e comprendere la misura in cui le variabili ambientali ne regolino la concentrazione, 
+inoltre ci si propone di predirre per l'anno 
 
 
-#2)Materiali e metodi
 
-## 2.1) I dati
+###2)Materiali e metodi
+
+#### 2.1) I dati
 
 Sono stati analizzati i valori giornalieri (espressi in media giornaliera) di concentrazione della polevere sottile PM10. Il data frame è composto da 365 osservazioni su di 11 variabili.
-Le variabili sono:Media(valore medio giornaliero), Mediana (valore mediano giornaliero), Massima (valore massimo giornaliero), Temperatura, Umidità relativa, Pioggia, Radiazione solare, Pressione, Velocità del vento, Direzione del vento (secondo la rosa dei venti), Data.
+Le variabili sono: Media(valore medio giornaliero), Mediana (valore mediano giornaliero), Massima (valore massimo giornaliero), Temperatura, Umidità relativa, Pioggia, Radiazione solare, Pressione, Velocità del vento, Direzione del vento (secondo la rosa dei venti), Data del rilevamento.
 
-#2.2)Analisi esplorativa
+####2.2)Analisi esplorativa
 
-Per comprendere il comportamento dei dati è stata condotta un'analisi esplorativa dei dati. Inizialmente disegnando dei Boxplot, per evidenziare la presenza di possibili valori anomali (outliers),disegnando dei grafici a dispersione a coppie e gli istogrammi delle stesse, infine attraverso l'analisi delle componenti principali(ACP o PCA,Principal component analysis) si è tentato di  rappresentare l'insieme dei dati in uno spazio di dimensione ridotta. 
+Per visualizzare graficamente il comportamento dei dati è stata condotta un'analisi esplorativa degli stessi.Sono stati disegnati dei diagrammi, dei grafici di dispersione a coppie, dei boxplot ed è stata condotta l'analisi delle componenti principali (ACP  o PCA).
 
-```{r}
+
+```{r include = FALSE}
 #setto la WD ----
 pm10 <- read.csv2("data/pm2010.csv", dec = ".")
 
@@ -141,8 +144,9 @@ col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_co
 # questa funzione produce un vettore di 74 colori
 ```
 
-# plot
+##### 2.2.1) Diagrammi, Boxplot, Grafici di dispersione a coppie
 
+Il diagramma o serie storica delle concentrazioni di Pm10 (Fig 1) è stato disegnato mantenendo in ascissa il tempo espresso in giorni ed in ordinata le concentrazioni medie, massime e mediane di pm10 .Questo ha mostrato un'andamento periodico per le tre variabili che,per media e mediana risulta essere il medesimo, mentre per la massima presenta dei picchi di maggiore intensità rispetto a le due. 
 
 ```{r}
 library(ggplot2)
@@ -152,33 +156,52 @@ pm10$data2 <- seq(1,365,1)
 ggplot(pm10, aes(x = data2)) +
   geom_path(aes(y = media), color = "red") +
   geom_path(aes(y = mediana), color = "blue") +
-  geom_path(aes(y = max), color = "green")
+  geom_path(aes(y = max), color = "green") +
+  labs(y="Concentrazioni pm10")+
+  labs(x="Giorni dell'anno 2009")+
+  
   
 
 ```
+###### Fig 1)Serie temporale concentrazione media,mediana e massima di Pm10 durante l'anno 2009(espresso in giorni)
+
+#####Boxplot
+
+I Boxplot, "grafici a baffi e scatole ", sono stati utili per mostrare in modo compatto la distribuzione delle variabili ed hanno permesso di individuare la presenza di possibili valori anomali (outliers) .Questi sono il disegno su di un piano cartesiano di un rettangolo, i cui estremi rappresentano il primo e terzo quartile (Q1 e Q3) e sono tagliati a metà da una linea che rappresenta la mediana (Q2). Il minimo della distribuzione viene indicato con (Q0), mentre il massimo con (Q4) i quali corrispondono agli estremi delle due righe (baﬃ).I baffi si trovano per convenzione ad una distanza di 1.5 volte la distanza interquartile (Q3-Q1) a partire rispettivamente dal primo dal terzo quartile.I valori anomali sono rappresentati con dei punti al di fuori dell'intervallo compreso tra i baffi.
 
 
-#boxplot
+
 ```{r}
 
 boxplot(data_hills$media~data_hills$stagione,col=col_vector,main="Concentrazioni medie di Pm10")
 
+```
+###### Fig2.1)Boxplot delle concentrazioni medie di Pm10 durante le stagioni nell'anno 2009 a Taranto.
+```{r}
+
+
+boxplot(pm10_a$media~pm10_a$mese2,col=col_vector,main="Concentrazioni medie di Pm10 nei Mesi (aa.2009) ")
+```
+###### Fig 2.2)Boxplot delle concentrazioni medie di Pm10 durante i mesi dell'anno 2009 a Taranto
+```{r}
 boxplot(data_hills$max~data_hills$stagione,col=col_vector, main="Concentrazioni massime di Pm10 ")
 
-plot(data_hills$dv,data_hills$media, main=" Boxplot concentazione Pm10 e direzione del vento",ylab="Concentrazione media di Pm10", col=col_vector)
+```
+###### Fig2.3)Boxplot delle concentrazioni massime di Pm10 durante le stagioni dell' anno 2009 a Taranto
 
-boxplot(pm10_a$media~pm10_a$mese2,col=col_vector,main="Concentrazioni medie di Pm10 per mese")
+```{r}
+plot(data_hills$dv,data_hills$media, main=" Concentazioni di Pm10 in relazione alla direzione del vento",ylab="Concentrazione media di Pm10", col=col_vector)
 
 ```
+###### Fig2.4)Boxplot delle concentrazioni medie di Pm10 in relazione alla direzione del vento dell'anno 2009 a Taranto
+
+Sono stati disegnati dei boxplot relativi alle concentrazioni medie (Fig 2.1) e massime(Fig 2.3) di Pm10 in relazione alle stagioni per verificare se vi fosse presenza di valori anomali o variazioni evidenti in una determinata stagione rispetto alle altre e per valutarne l'andamento generale. Dall'osservazione di questi è emerso un andamento sinusoidale maggiormente visibile nei boxplot relativi al  mese (Fig2.2) che indica la forte presenza di stagionalità nelle concentrazioni di Pm10.
+Dall'osservazione dei Boxplot sulla concentrazione media di Pm10 in relazione alla direzione del vento (secondo la rosa dei venti),(Fig 2.4) è invece emersa la forte influenza del vento proveniente da SudEst, la quale presenta numerosi valori anomali, e quindi concetrazioni di Pm10 più alte rispetto alle altre direzioni.
 
 
-Dall'osservazione dei Boxplot sulla concentrazione media di Pm10 in relazione alla direzione del vento (secondo la rosa dei venti),il vento da SudEst presenta dei valori anomali, e quindi concetrazioni di Pm10 più alte rispetto alle altre direzioni.
-Ulteriori boxplot relativi alle concentrazioni medie e massime di Pm10 in relazione alle stagioni,sono stati disegnati  per verificare se vi fosse presenza di valori anomali o variazioni evidenti in una determinata stagione rispetto alle altre. Dal boxplot delle stagioni e maggiormente del mese è risultato un andamento sinusoidale che indica stagionalità.
 
-
-
-
-# Grafico a gruppi
+####Grafico di dispersione a coppie
+Il grafico a coppie 
 
 ```{r}
 panel.hist <- function(x, ...)
@@ -231,6 +254,8 @@ scatter(pcapm, clab.row = 0.5)
 #valori dei punteggi per le variabili
 pcapm$c1
 ```
+
+Infine attraverso l'analisi delle componenti principali(ACP o PCA,Principal component analysis) è stato possibile rappresentare l'insieme dei dati in uno spazio di dimensione ridotta, definendo le direzioni di massima informazione (autovettori ed autovalori).
 
 
 Nell'analisi in componenti principali si è preferito tenere in considerazione le sole variabili quantitative, per poter visualizzare in maniera chiara la distribuzione dell'informazione presente nel dataset tenendo 3 assi.Attraverso la somma cumulata degli autovalori, è stato possibile calcolare la percentuale di informazione spiegata dalle componenti.Le 3 componenti principali spiegano il 71% dell' informazione presente nel dataset.
@@ -298,7 +323,7 @@ Per quanto rigarda il vento sembrerebbe essere maggiore solo in inverno il che c
 
 
 
-# 2.3) Analisi statistica 
+### 2.3) Analisi statistica 
 
 ## La REGRESSIONE MULTIPLA
 
@@ -458,6 +483,28 @@ plot(data_hills$max,data_hills$pgg_l,type="l")
 
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#5) Bibliografia
+
+
+•	Brunekreef B, S.T. Holgate (2002) Air pollution and health. Lancet 360. 
+
+•	Fuzzi, S., 2009. Caratterizzazione del particolato fine atmosferico: attuale situazione e prospettive. In: Atti del quarto Convegno Nazionale Controllo ambientale degli agenti fisici: nuove prospettive e problematiche emergenti. Vercelli, 24-27 marzo 2009. 
+
+•	Marconi A., 2003. Materiale particellare aerodisperso: definizioni, effetti sanitari, misura e sintesi delle indagini ambientali effettuate a Roma, Annali dell’Istituto Superiore di Sanità, 39(3): 329-342. 
 
 
 
