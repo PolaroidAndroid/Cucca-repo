@@ -3,19 +3,27 @@
 
 
 "media"=valore medio giornaliero
-   "mediana"=valore mediano giornaliero
- "max"=valore massimo giornaliero
+ 
+  "mediana"=valore mediano giornaliero
+ 
+"max"=valore massimo giornaliero
 meteo:
-     "tmp"= temperatura
+  
+   "tmp"= temperatura
    
   "umr"=umidità relativa     
-     "pgg"=totale di pioggia
-     "rdz"=radazione solare
-     "prs"=pressione
-     "vv"=velocità del vento     
+   
+  "pgg"=totale di pioggia
+    
+ "rdz"=radazione solare
+    
+ "prs"=pressione
+   
+  "vv"=velocità del vento     
   
-   "dv"=direzione del vento (secondo la rosa dei venti)
-      "data"=data della rilevazione
+  "dv"=direzione del vento (secondo la rosa dei venti)
+    
+  "data"=data della rilevazione
  
 
 

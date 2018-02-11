@@ -1,12 +1,12 @@
 ---
-title: Concentrazione del particolato atmosferico (Particulate matter,PM10) nell’aria della città di Taranto (2009)in relazione alle condizioni ambientali
+title: Concentrazione del particolato atmosferico (Particulate matter,PM10) nell’aria della città di Taranto in relazione alle condizioni ambientali
 
 author: "Giorgia Desantis, Alessandro Mori, Eros Quésada,Lorenzo Panunzio,Cristiana Poggi"
 output: word_document
 ---
 
 
-![Caption for the picture.](Cucca-repo/statistica/ciaone.jpg)
+![Caption](ciaone.jpg)
 
 
 ### Indice
@@ -23,8 +23,8 @@ output: word_document
 2.2.1 Diagrammi,Box plot,Grafici di dispersione a coppie
 2.2.2 Analisi delle componenti principali (ACP o PCA)
 2.3 Analisi statistica
-2.3.1 Regressione multipla
-2.3.2 GAM
+2.3.1 La regressione multipla
+2.3.2 GAM (Generalised additive modelling)
 3) Conclusione
 4) Bibliografia
 
@@ -36,28 +36,28 @@ output: word_document
 
 Negli ultimi decenni diversi studi di stampo epidemiologico e tossicologico hanno indicato  l’inquinamento atmosferico come responsabile di effetti avversi sulla salute dell’uomo e dell’ambiente, (APAT, 2007). Le evidenze scientifiche hanno documentato un’ampia gamma di esiti sanitari e ambientali negativi dovuti alla presenza di particolato atmosferico (Particulate matter, PM) nell’aria.  La presenza di particolato atmosferico nell’aria è infatti considerata la causa di irritazioni dell’apparato respiratorio fino al tumore al polmone, e la concausa dei cambiamenti climatici (Quarol et al., 2001).
 
-####1.1 Il particolato atmosferico 
+####1.1) Il particolato atmosferico 
 Le particelle costituenti il PM variano per composizione, origine e dimensione, (APAT, 2007). Il particolato atmosferico è una miscela complessa di particelle (carbonio, ammonio, nitrati, solfiti, polveri minerali, elementi in traccia e acqua), (Hueglin et al., 2005), le cui sostanze possono presentarsi miscelate allo stato condensato (solido o liquido).  
 Il particolato atmosferico viene notoriamente classificato in base al diametro aerodinamico delle particelle che lo costituiscono, poiché da questa caratteristica dipende il tempo di sospensione e quindi la permanenza nell’aria, (APAT, 2007): 
 
 •	PM10 : particelle di diametro aereodinamico inferiore ai 10 micron, raggiungono la parte sommitale del sistema respiratorio e, parzialmente, i polmoni. Le precipitazioni rimuovono queste particelle dall’aria dopo poche ore dalla loro emissione. 
 •	PM2.5: particelle di diametro aereodinamico inferiore ai 2.5 micron, sono le più pericolose poiché penetrano a fondo nei polmoni e vi permangono. Le precipitazioni non rimuovono considerevolmente dall’aria queste particelle, così che esse possono permanere in atmosfera per giorni o addirittura settimane dopo la loro emissione. 
 
-####1.2 Origini del particolato atmosferico
+####1.2) Origini del particolato atmosferico
 Le origini del particolato atmosferico sono varie e se ne riconoscono di antropogeniche e di naturali. Tra i processi antropici che emettono particolato atmosferico nell’aria ricordiamo: la combustione di carburante per veicoli (sia diesel che benzina), i combustibili solidi (carbone, lignite e biomassa), il riscaldamento domestico, le attività industriali (come costruzioni, miniere, manifattura di cemento, ceramica e mattoni, fusione), l’erosione del manto stradale a causa del traffico, le abrasioni di freni e pneumatici, i lavori in grotte e miniere (APAT, 2007). 
 
-####1.3 Effetti sulla salute umana 
-Gli effetti dell’inquinamento atmosferico da PM10 sulla salute umana sono stati oggetto di intensi studi negli ultimi anni, (Hueglin et al., 2005). L'esposizione a particolato atmosferico (PM10) è stata associata ad aumenti della mortalità e dei ricoveri ospedalieri dovuti a malattie respiratorie e cardiovascolari. Gli effetti sono stati osservati per esposizioni a livelli molto bassi di concentrazione di PM10  e non è chiaro se esista una concentrazione soglia per il particolato al di sotto della quale non sono probabili effetti sulla salute. Studi in vitro ed in vivo su animali ed esseri umani hanno rivelato potenti effetti pro – infiammatori  che coinvolgono cellule epiteliali polmonari. Il particolato atmosferico una volta nel polmone viene assorbito dalle cellule epiteliali ed attaccato dai macrofagi. L’attacco dei macrofagi alveolari instaura la secrezione da parte delle cellule del polmone di citochinine e mediatori immunitari nel sangue che stimolano l’attivazione dei globuli bianchi (neutrofili e  linfociti), (Brunekreef e Holgate, 2002). Nel breve periodo l’infiammazione porta ad un danno tissutale acuto conosciuto come metaplasia polmonare (Terzano, 2006), rilevabile per la presenza di proteine come il recettore del fattore di crescita epidermico (EGFR) che evidenziano tentativi di riparazione dell'organo, e produzione continua di muco che porta ad un restringimento del lume polmonare. Attraverso l'attivazione delle vie di segnalazione dello stress dall'epitelio ai microvasi polmonari, vengono generati fattori che influenzano la coagulazione del sangue il che può condurre a disturbi circolatori come l’aritmia, (Brunekreef e Holgate, 2002). Nel ’98 l’OMS ha indicato le elevate concentrazioni di PM10 in otto città italiane (media pesata 52.6 g/m3), come causa di 3500 decessi, (APAT, 2007). 
+
+####1.3) Effetti sulla salute umana 
+Gli effetti dell’inquinamento atmosferico da PM10 sulla salute umana sono stati oggetto di intensi studi negli ultimi anni, (Hueglin et al., 2005). L'esposizione a particolato atmosferico (PM10) è stata associata ad aumenti della mortalità e dei ricoveri ospedalieri dovuti a malattie respiratorie e cardiovascolari. Gli effetti sono stati osservati per esposizioni a livelli molto bassi di concentrazione di PM10  e non è chiaro se esista una concentrazione soglia per il particolato al di sotto della quale non sono probabili effetti sulla salute. Studi in vitro ed in vivo su animali ed esseri umani hanno rivelato potenti effetti pro – infiammatori  che coinvolgono cellule epiteliali polmonari. Il particolato atmosferico una volta nel polmone viene assorbito dalle cellule epiteliali ed attaccato dai macrofagi. L’attacco dei macrofagi alveolari instaura la secrezione da parte delle cellule del polmone di citochinine e mediatori immunitari nel sangue che stimolano l’attivazione dei globuli bianchi (neutrofili e  linfociti), (Brunekreef e Holgate, 2002). Nel breve periodo l’infiammazione porta ad un danno tissutale acuto conosciuto come metaplasia polmonare (Terzano, 2006), rilevabile per la presenza di proteine come il recettore del fattore di crescita epidermico (EGFR) che evidenziano tentativi di riparazione dell'organo, e produzione continua di muco che porta ad un restringimento del lume polmonare. Attraverso l'attivazione delle vie di segnalazione dello stress dall'epitelio ai microvasi polmonari, vengono generati fattori che influenzano la coagulazione del sangue il che può condurre a disturbi circolatori come l’aritmia, (Brunekreef e Holgate, 2002). Nel ’98 l’OMS ha indicato le elevate concentrazioni di PM10 in otto città italiane (media pesata 52.6 \mu g/m3), come causa di 3500 decessi, (APAT, 2007). 
+
 
 ####1.4 Legislazione
 	In numerosi Paesi, le concentrazioni del particolato atmosferico di entrambe le categorie dimensionali vengono misurate regolarmente da decenni. In Italia, con poche eccezioni (Firenze, ad esempio), solo il PM10 è misurato routinariamente in centraline fisse di monitoraggio, poiché esso è considerato una buona misura del complesso mix di inquinanti solidi e gassosi creati dal trasporto, dalla combustione di carburanti per veicoli e dalla produzione di energia elettrica e termica, (APAT, 2007; Gasparinetti, 2015). 
-	Alla luce delle conseguenze sanitarie dovute a concentrazioni superiori alla concentrazione considerata naturale per il PM10 (6 μg/m3), su indicazione dell’Organizzazione mondiale della sanità (OMS), il Consiglio Europeo ha emanato la Direttiva 1999/30/EC (Unione Europea, 1999) nella quale vengono introdotti due differenti limiti per il PM10 per la protezione della salute umana: un limite per la media giornaliera di 50 μg/m3, da non superarsi per più di sette volte in un anno, e uno per quella annuale, 40 μg/m3, (Lena e Pirrollo, 2010). Questi limiti sono stati successivamente confermati nella Direttiva 2008/50/CE (Gazzetta Ufficiale dell’Unione Europea, 2008) 
+Alla luce delle conseguenze sanitarie dovute a concentrazioni superiori alla concentrazione considerata naturale per il PM10 (6 \mu g/m3), su indicazione dell’Organizzazione mondiale della sanità (OMS), il Consiglio Europeo ha emanato la Direttiva 1999/30/EC (Unione Europea, 1999) nella quale vengono introdotti due differenti limiti per il PM10 per la protezione della salute umana: un limite per la media giornaliera di 50 \mu g/m3, da non superarsi per più di sette volte in un anno, e uno per quella annuale, 40 \mu g/m3, (Lena e Pirrollo, 2010). Questi limiti sono stati successivamente confermati nella Direttiva 2008/50/CE (Gazzetta Ufficiale dell’Unione Europea, 2008) 
 
 ####1.5 Obiettivi della ricerca. 
 
-Numerosi studi hanno indagato il potenziale ruolo dei fattori meteorologici, nella diminuzione della concentrazione del particolato atmosferico in alcune città e zone rurali europee  (i.e: Sanchez – Reina et al., 2006; Olszowsky, 2015;), con esiti positivi: la concentrazione di particolato atmosferico con diametro aereodinamico 10 μg (PM10) viene influenzata dalla presenza di precipitazioni atmosferiche e varia a seconda della direzione del vento. Nella presente ricerca viene esaminata la concentrazione di PM10 in una delle città più inquinate d’Italia, Taranto. L'obbiettivo della ricerca è quello di indagare la variazione delle concentrazioni di PM10 e comprendere la misura in cui le variabili ambientali ne regolino la concentrazione, 
-inoltre ci si propone di predirre per l'anno 
-
+Numerosi studi hanno indagato il potenziale ruolo dei fattori meteorologici, nella diminuzione della concentrazione del particolato atmosferico in alcune città e zone rurali europee  (i.e: Sanchez – Reina et al., 2006; Olszowsky, 2015;), con esiti positivi: la concentrazione di particolato atmosferico con diametro aereodinamico 10\mu g (PM10) viene influenzata dalla presenza di precipitazioni atmosferiche e varia a seconda della direzione del vento. Nella presente ricerca viene esaminata la concentrazione di PM10 in una delle città più inquinate d’Italia, Taranto. L'obiettivo della ricerca è quello di indagare la variazione delle concentrazioni di PM10 e comprendere la misura in cui le variabili ambientali ne regolino la concentrazione.
 
 
 ###2)Materiali e metodi
@@ -72,7 +72,7 @@ Le variabili sono: Media(valore medio giornaliero), Mediana (valore mediano gior
 Per visualizzare graficamente il comportamento dei dati è stata condotta un'analisi esplorativa degli stessi.Sono stati disegnati dei diagrammi, dei grafici di dispersione a coppie, dei boxplot ed è stata condotta l'analisi delle componenti principali (ACP  o PCA).
 
 
-```{r include = FALSE}
+```{r}
 #setto la WD ----
 pm10 <- read.csv2("data/pm2010.csv", dec = ".")
 
@@ -84,13 +84,12 @@ pm10_a <- separate(pm10, col = "data", into = c("anno","mese","giorno"), sep = "
 
 pm10_a$mese2 <- as.numeric(pm10_a$mese)
 
-str(pm10_a)        
 
 pm10_a$mese2
 
 
 pm10_a$giorno2 <- as.numeric(pm10_a$giorno)
-str(pm10_a)
+
 # stagioni: primavera (21-03 / 20-06), estate (21-06/22-09), autunno (23-09 /21-12)
 # inverno(22-12/20-03)
 
@@ -114,10 +113,6 @@ k <- getSeason(pm10$data)
 
 pm10_a$Stagione<- k
 
-table(pm10_a$Stagione)
-
-
-summary(pm10_a)
 ```
 ```{r}
 
@@ -153,13 +148,11 @@ library(ggplot2)
 pm10$data2 <- seq(1,365,1)
 
 
-ggplot(pm10, aes(x = data2)) +
-  geom_path(aes(y = media), color = "red") +
-  geom_path(aes(y = mediana), color = "blue") +
-  geom_path(aes(y = max), color = "green") +
-  labs(y="Concentrazioni pm10")+
-  labs(x="Giorni dell'anno 2009")+
-  
+ggplot(pm10, aes(x = data2))+
+  geom_path(aes(y = media), color = "red")+
+  geom_path(aes(y = mediana), color = "blue")+
+  geom_path(aes(y = max), color = "green")+
+  xlab("Giorni dell'anno") + ylab("Concentrazione Pm10")
   
 
 ```
@@ -176,33 +169,32 @@ I Boxplot, "grafici a baffi e scatole ", sono stati utili per mostrare in modo c
 boxplot(data_hills$media~data_hills$stagione,col=col_vector,main="Concentrazioni medie di Pm10")
 
 ```
-###### Fig2.1)Boxplot delle concentrazioni medie di Pm10 durante le stagioni nell'anno 2009 a Taranto.
+###### Fig 2)Boxplot delle concentrazioni medie di Pm10 durante le stagioni nell'anno 2009 a Taranto.
 ```{r}
 
 
 boxplot(pm10_a$media~pm10_a$mese2,col=col_vector,main="Concentrazioni medie di Pm10 nei Mesi (aa.2009) ")
 ```
-###### Fig 2.2)Boxplot delle concentrazioni medie di Pm10 durante i mesi dell'anno 2009 a Taranto
+###### Fig 2.1)Boxplot delle concentrazioni medie di Pm10 durante i mesi dell'anno 2009 a Taranto
 ```{r}
 boxplot(data_hills$max~data_hills$stagione,col=col_vector, main="Concentrazioni massime di Pm10 ")
 
 ```
-###### Fig2.3)Boxplot delle concentrazioni massime di Pm10 durante le stagioni dell' anno 2009 a Taranto
+###### Fig2.2)Boxplot delle concentrazioni massime di Pm10 durante le stagioni dell' anno 2009 a Taranto
 
 ```{r}
 plot(data_hills$dv,data_hills$media, main=" Concentazioni di Pm10 in relazione alla direzione del vento",ylab="Concentrazione media di Pm10", col=col_vector)
 
 ```
-###### Fig2.4)Boxplot delle concentrazioni medie di Pm10 in relazione alla direzione del vento dell'anno 2009 a Taranto
+###### Fig2.3)Boxplot delle concentrazioni medie di Pm10 in relazione alla direzione del vento dell'anno 2009 a Taranto
 
-Sono stati disegnati dei boxplot relativi alle concentrazioni medie (Fig 2.1) e massime(Fig 2.3) di Pm10 in relazione alle stagioni per verificare se vi fosse presenza di valori anomali o variazioni evidenti in una determinata stagione rispetto alle altre e per valutarne l'andamento generale. Dall'osservazione di questi è emerso un andamento sinusoidale maggiormente visibile nei boxplot relativi al  mese (Fig2.2) che indica la forte presenza di stagionalità nelle concentrazioni di Pm10.
-Dall'osservazione dei Boxplot sulla concentrazione media di Pm10 in relazione alla direzione del vento (secondo la rosa dei venti),(Fig 2.4) è invece emersa la forte influenza del vento proveniente da SudEst, la quale presenta numerosi valori anomali, e quindi concetrazioni di Pm10 più alte rispetto alle altre direzioni.
+Sono stati disegnati dei boxplot relativi alle concentrazioni medie (Fig 2) e massime(Fig 2.2) di Pm10 in relazione alle stagioni per verificare se vi fosse presenza di valori anomali o variazioni evidenti in una determinata stagione rispetto alle altre e per valutarne l'andamento generale. Dall'osservazione di questi è emerso un andamento sinusoidale maggiormente visibile nei boxplot relativi al  mese (Fig2.1) che indica la forte presenza di stagionalità nelle concentrazioni di Pm10.
+Dall'osservazione dei Boxplot sulla concentrazione media di Pm10 in relazione alla direzione del vento (secondo la rosa dei venti),(Fig 2.3) è invece emersa la forte influenza del vento proveniente da SudEst, la quale presenta numerosi valori anomali, e quindi concetrazioni di Pm10 più alte rispetto alle altre direzioni.
 
 
 
-####Grafico di dispersione a coppie
-Il grafico a coppie 
-
+##### Grafico di dispersione a coppie
+Il grafico a coppie o matrice di dispersione (scatter plot matrice), è la rappresentazione grafica per lo studio delle rappresentazioni numeriche bivariate. Grazie al grafico abbiamo una visualizzazione complessiva delle variabili ambientali. Nel grafico avremo in diagonale gli isogrammi, al di sotto dei quali abbiamo il coefficiente di correlazione di Pearson (r(Xi,xj)=Cov(X,Xj)/\log Var(Xi)Var(Xj)), e al di sopra i grafici a dispersione con le curve di regressione in rosso.
 ```{r}
 panel.hist <- function(x, ...)
 {
@@ -232,13 +224,14 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 data_pca <- pm10_a[,c(1:9)]
 pairs(data_pca,upper.panel =panel.smooth,lower.panel=panel.cor,diag.panel = panel.hist)
 ```
+###### Fig 2.4) Grafici a dispersione, istogrammi e correlazioni, in rosso curve di rigressione tra coppie di variabili
 
-# PCA
+
+##### Analisi delle componenti principali (ACP o PCA)
 ```{r}
 ### PCA ANALYSIS ----
 require(ade4)
 
-names(pm10_a)
 
 #estraggo da pm10 solo le variabili numeriche da inserire nella PCA escludendo giorno mese e anno che sono da considerarsi factors
 data_pca <- pm10_a[,c(1:9)]
@@ -251,26 +244,18 @@ pcapm <- dudi.pca(data_pca, scannf = FALSE, nf = 3)
 # clab.col invece controlla le variabili
 scatter(pcapm, clab.row = 0.5)
 
-#valori dei punteggi per le variabili
-pcapm$c1
+
 ```
+###### Fig 2.5) Biplot delll'analisi in componenti principali
+basata sulla matrice di correlazione.
 
-Infine attraverso l'analisi delle componenti principali(ACP o PCA,Principal component analysis) è stato possibile rappresentare l'insieme dei dati in uno spazio di dimensione ridotta, definendo le direzioni di massima informazione (autovettori ed autovalori).
-
-
-Nell'analisi in componenti principali si è preferito tenere in considerazione le sole variabili quantitative, per poter visualizzare in maniera chiara la distribuzione dell'informazione presente nel dataset tenendo 3 assi.Attraverso la somma cumulata degli autovalori, è stato possibile calcolare la percentuale di informazione spiegata dalle componenti.Le 3 componenti principali spiegano il 71% dell' informazione presente nel dataset.
-Gli autovalori corrispondono alla quantità di variabilità spiegata lungo l' autovettore, il primo autovettore rappresenta le concentrazioni medie di Pm10, le concentrazioni massime di Pm10 e la Mediana, che risultano essere abbastanza correlate(media e mediana maggiormente con una correlazione di 0.97, mentre media e max un valore di 0.81).
-La seconda compontente rappresenta le variabili ambientali: temperatura, pressione e radiazione solare hanno correlazione negativa rispetto all'umidità. La pioggia sembra essere al litime, con un autovalore abbastanza basso. La terza componente rappresenta il vento.
 
 ```{r}
-#cerchio di correlazione, i punteggi delle varibili sono plottati su una circonferenza di raggio unitario
-par(mfrow = c(2,2))
-s.corcircle(pcapm$c1, xax = 1, yax = 2) #plotto prima e seconda
-s.corcircle(pcapm$c1, xax = 1, yax = 3) #plotto prima e terza
-s.corcircle(pcapm$c1, xax = 2, yax = 3) #plotto seconda e terza
-```
+library(broom)
+pcapm$c1
 
-# **Autovalori**
+```
+###### Tabella 1) Punteggi delle variabili sui tre assi principali
 
 ```{r}
 #calcolo gli autovalori
@@ -281,90 +266,193 @@ cumsum(pcapm$eig / sum(pcapm$eig)) # con i primi tre assi spiego circa il 70% ch
 ```
 
 
-## Le variabili qualitative
+Attraverso l'analisi delle componenti principali(ACP o PCA,Principal component analysis) è stato possibile rappresentare l'insieme dei dati in uno spazio di dimensione ridotta, definendo le direzioni di massima informazione. 
+L’analisi in componenti principali (PCA) ha come scopo primario la riduzione di un numero più o meno elevato di variabili (rappresentanti le caratteristiche del fenomeno analizzato) in alcune variabili latenti, dette componenti principali. Queste identificano i pattern di variabilità rilevanti nell’insieme dei dati disponibili. Solitamente, infatti, si ha a che fare con insiemi di dati altamente multivariati; per poter rappresentare graficamente questi dati conservando il massimo dell’informazione si rende necessario riportare le variabili in uno spazio di 2 o 3 dimensioni, in questo caso sono stati scelti 3 assi.
+Nell'analisi in componenti principali si è preferito tenere in considerazione le sole variabili quantitative, per poter visualizzare in maniera chiara la distribuzione dell'informazione presente nel dataset. Dall' osservazione del biplot (Fig 2.5) e la lettura dei punteggi (Tabella 1) è stato possibile individuare il contributo di ciascuna variabile agli assi. Attraverso la somma cumulata degli autovalori, è stato possibile calcolare la percentuale di informazione spiegata dalle componenti.Le 3 componenti principali spiegano il 71% dell' informazione presente nel dataset; sono stati poi caratterizzati gli assi ( Fig 2.6-2.7-2.8).Grazie al biplot ed ai punteggi comprendiamo quali variabili danno maggior contributo agli assi: le concentrazioni di Pm10 (massime, medie e mediane) per il primo asse, le variabili ambientali temperatura, pressione e radiazione solare con correlazione negativa rispetto all'umidità, per il secondo asse (la pioggia sembra essere al litime con un punteggio abbastanza basso) la velocità del vento per il terzo asse.
 
 ```{r}
-
-par(mfrow= c(1,1))
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2, col = c(1,2,3,4)) 
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3, col = c(1,2,3,4))
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = c(1,2,3,4))
-
-
-
-s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = rainbow(4)) #se volessi usare la funzione rainbow
-
+#cerchio di correlazione, i punteggi delle varibili sono plottati su una circonferenza di raggio unitario
+s.corcircle(pcapm$c1, xax = 1, yax = 2) #plotto prima e seconda
+```
+###### Fig 2.6)Cerchio di correlazione primo e secondo asse principali
+```{r}
+s.corcircle(pcapm$c1, xax = 1, yax = 3) #plotto prima e terza
 
 ```
+###### Fig 2.7) Cerchio di correlazione primo e terzo asse principali
 
-Primo piano fattoriale comp 1-2: le ellissi si dispongono trasversalmente. Tuttavia cosa si nota,sembrerebbe esserci una maggiore variazione sulla direzione della seconda componente rispetto alla prima. Il che significa che c'è una certa variazione dei fattori ambientali durante l'anno (come ci aspettiamo), temperatura , radiazione solare e pressione elevate in estate e invece umidità e forse precipitazioni (ha punteggio basso) elevate in inverno. 
-- in termini di concentrazione di pm10 c'è una variazione ma sembrerebbe essere inferiore rispetto a quelle delle variabili ambientali. Tuttavia, l'asse maggiore delle ellissi per autunno e inverno è lungo la direzione della prima componente il che indica che in quei mesi c'è una maggiore varibilità ma in termini di media stagionale sono identici.
-- La primavera è praticamente un cerchio il cui centro combacia con il centro del piano fattoriale indicando che le condizioni corrispondono alla media del sistema. 
-il fattore stagionale in termini di conc di pm10 e fattori ambientali è piuttosto evidente.
+```{r}
+s.corcircle(pcapm$c1, xax = 2, yax = 3) #plotto seconda e terza
+```
+###### Fig 2.8) Cerchio di correlazione secondo e terzo asse 
+principali
+
+
+##### Cerichi di correlazione tra gli assi e le variabili qualitative
+
+Per comprendere se le variabili qualitative omesse dalla PCA  avessero qualche tipo di influenza sulle componenti principali e nella caratterizzazione degli assi sono stati disegnati dei cerchi di correlazione tra variabili qualitative (Stagione e Direzione del vento) e le componenti principali. Nei cerchi di correlazione (Fig 2.10- 2.11-2.12) relativi alle stagioni, le ellissi si dispongono trasversalmente e si nota una maggiore variazione sulla direzione della seconda componente rispetto alla prima. Questo significa che c'è una certa variazione dei fattori ambientali durante l'anno: temperatura , radiazione solare e pressione elevate in estate e invece umidità e precipitazioni elevate in inverno. In termini di concentrazione di pm10 c'è una variazione ma sembrerebbe essere inferiore rispetto a quelle delle variabili ambientali. Tuttavia, l'asse maggiore delle ellissi per autunno e inverno è lungo la direzione della prima componente il che indica che in quei mesi c'è una maggiore varibilità ma in termini di media stagionale sono identici.
+La primavera è praticamente un cerchio il cui centro combacia con il centro del piano fattoriale indicando che le condizioni corrispondono alla media del sistema. 
+Se ne deduce che il fattore stagionale in termini di concentrazione di pm10 e fattori ambientali è piuttosto evidente.
+
+
+```{r}
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2, col = c(1,2,3,4)) 
+
+```
+###### Fig 2.9)Cerchio di correlazione primo e secondo asse in relazione alla stagione
+
+```{r}
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3, col = c(1,2,3,4))
+```
+###### Fig 2.10) Cerchio di correlazione primo e terzo asse in relazione alla stagione
+```{r}
+s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = c(1,2,3,4))
+```
+###### Fig 2.11) Cerchio di correlazione secondo e terzo asse in relazione alla stagione
+
+Per quanto rigarda il fattore direzione del vento (espresso secondo la rosa dei venti) i cerchi di correlazione hanno mostrato un'influenza maggiore solo in inverno con una  corrispondente concentrazione di Pm10 più bassa, cosa plausibile se si pensa che in inverno il vento forte tende a disperdere il Pm 10. I venti da SE mostrano una variabilità estrema sia in termini di concentrazione di pm10 sia per quanto riguarda gli altri fattori ambientali, mentre i venti da NW sono i più intensi, ma non sembrano corrispondere ad una riduzione nella concentrazione di Pm10.
+
+
+
 ```{r}
 #DIREZIONE DEL VENTO ----
-s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2, col = sample(col_vector, nlevels(pm10$dv)))
-s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = sample(col_vector, nlevels(pm10$dv)))
-s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = sample(col_vector, nlevels(pm10$dv)))
-
 s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2, col = rainbow(nlevels(pm10$dv)),clabel = .8)
 
+```
+###### Fig 2.13)Cerchio correlazione primo e secondo asse in relazione alla direzione del vento  
+
+```{r}
 s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = rainbow(nlevels(pm10$dv)))
+
+```
+###### Fig 2.14) Cerchio di correlazione primo e terzo asse in relazione alla direzione del vento
+```{r}
 s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = rainbow(nlevels(pm10$dv)))
-
 ```
-
-Per quanto rigarda il vento sembrerebbe essere maggiore solo in inverno il che corrisponde ad una conc più bassa di pm10 (come ci aspettiamo perchè il vento sparge i pm10 mentre la pioggia li fa depositare a terra)
-
-
-- i venti da SE hanno una variabilità estrema in termini di pm10 e fattori ambientali 
-- i venti da NW sono i più intensi ma non sembrano corrispondere ad una riduzione di conc di pm10.
+###### Fig 2.15) Cerchio di correlazione secondo e terzo asse in relazione alla direzione del vento 
 
 
 
 
-### 2.3) Analisi statistica 
 
-## La REGRESSIONE MULTIPLA
+#### 2.3) Analisi statistica 
+
+#####2.3.1) La regressione lineare multipla
+
+Sono stati stimati dei modelli di regressione lineare multipla (Tabella 2) al fine di comprendere se vi fosse una relazione lineare tra la variabile indipendente ovvero la concentrazione media di Pm10 e le variabili dipendenti ovvero le variabili ambientali. 
+La formula del modello è:
+Y=\beta o +\beta 1 x1 + \beta 2 x2 + ...\beta p xp +\varepsilon i
+dove:
+-Y rappresenta la variabile indipendente (conc.media Pm10) 
+-\beta o rappresenta l'interecetta del modello
+-\beta p xp rappresenta il coefficiente di regressione parziale   che da l'intensità e la direzione della relazione tra x ed y. 
+-\varepsilon i rappresenta i residui del modello che dovranno rispettare le regole di indipendenza, omoschedasticità e normalità(Distribuzione gaussiana).
+Il test di ipotesi alla base del modello è:
+Ho: \beta i uguale a 0
+H1: \beta i diverso da 0 
+bove \beta i rappresenta il coefficiente della variabile i-esima
+La statistica test utilizzata dal modello di regressione lineare multipla è il test t. (equazione)
+Al fine di evitare la multicollinearità (overfitt) dovuta all'eccessiva correlazione delle variabili media e mediana è stato scelto di escludere quest'ultima dalla stima del modello.
+Per identificare quale modello rappresentasse meglio l'insieme dei dati si è deciso di procedere utilizzando la procedura automatica Stepwise (Stepwise regression). Una volta stimato il modello di regressione ottimale (Tabella 2,modello2) è stata applicata la procedura che mediante una misura di adattamento (Googness of fit) ha stimato il miglior modello (Tebella 2, modello3).
+La procedura Stepwise si basa sull'AIC (akaike information criterion), ovvero la misura di entropia dei dati, questo è un  criterio di verosimiglianza ed assume che i dati siano gaussiani.
+
+Yi~ N(\beta o + \beta 1 x1 ... + \beta p xp)
+P(y<=y1)
+
+Dall'output del modello scelto(tabella 3),risultano essere maggiormente significative le variabili massima, velocità del vento, ed umidità  mentre leggermente significative la temperatura e la stagione Winter.Dal valore dell'r2(0.83) risulta essere un buon modello per spiegare i dati.
+L'analisi dei residui(Fig 2.16) conferma la bontà del modello:la linearità e l'indipendenza è spiegata graficamente attraverso il grafico dei resuidi sui valori previsti (ResidualvsFitted) in cui la nuvola dei punti è distribuita abbastanza uniformemente intorno alla linea dello zero.La normalità è verificata attraverso il Q-Q plot, in cui i punti si dispongono lungo la bisettrice. Attraverso il grafico dei residui standardizzati verso i valori stimati del modello(Scale-Location) è confermata l'omoschedasticità dei residui.Il grafico dell'autocovarianza e autocorrelazione (fig 2.18), presenta in ordinata delle linee di autocorrelazione ed in ascissa il lag (intervallo di tempo tra le osservazioni), mentre le linee tratteggiate orizzontali indicano il limite di significatività statistica. Questo risulta essere buono non mostrando valori significativi nei residui.
+Inoltre i residui sono stati disegnati in funzione della stagione e della direzione del vento (Fig.2.19-2.20).
+
+
+ 
 
 ```{r}
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 summary(mod2)
+b<-summary(mod2)
+AIC(mod2)
 
-```
-
-
-
-Anche qui non puoi usare media, mediana e max insieme. Vendono chiaramente significative e ti alzano l'R^2 producendo un overfit
-L'autunno non è sparito ma è finito nell'intercetta come "corner point". Se inserisci una variabile "Dummy" (Qualitativa) in un modello R sceglie automaticamente i primo livello in ordine alpha numerico come corner point. Vuol dire che stai confrontando la variazione dei pm10 in autunno rispetto alle altre variabili e stagioni. L'AIC è un criterio di verosimiglianza che serve a confrontare modelli tra loro. Non importa se sia alto o basso, quello dipende dalla quantità di variabilità presente nel modello. Tu devi "teoricamente" ricercare il modello che abbia l'AIC più basso possibile ma sempre confrontandolo con gli altri modelli che hai fatto. E' esattamente ciò che fa la stepwise.
-
-```{r}
-mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
-summary(mod2)
-plot(mod2$residuals)
+mod1<-lm(max~tmp+media+vv+rdz+pgg+umr+prs,data=data_hills)
+summary(mod1)
+a<-summary(mod1)
+AIC(mod1)
 
 mod2s=step(mod2,direction="both")
 summary(mod2s)
-plot(mod2s$residuals)
+c<-summary(mod2s)
+```
+
+```{r}
+library(broom)
+
+tidy(mod2s)
+glance(mod2s)
+
+```
+###### Tabella 3) Modello di regressione lineare multipla con procedura Stepwise.
 
 
-qqnorm(mod2s$residuals)
 
 
 
-
-plot(mod2s$residuals~data_hills$dv)
-plot(mod2s$residuals~data_hills$stagione)
-acf(mod2s$residuals)
-cor(data_hills[,c(1:9)])
-
+```{r}
+plot(mod2s)
 
 ```
 
 
+###### Fig 2.16) Analisi dei residui del modello
+```{r}
+plot(mod2s$residuals,ylab="Residui del modello")
+c<-summary(mod2s)
+
+```
+######Fig 2.17)Analisi grafica dei residui
+```{r}
+acf(mod2s$residuals)
+```
+###### Fig 2.18) Analisi di autocorrelazione
 
 
 
+
+
+```{r}
+plot(mod2s$residuals~data_hills$dv,xlab="Direzione del vento",ylab = "Residui", col=rainbow(8))
+
+```
+
+###### Fig 2.19)Analisi dei residui in funzione della direzione del vento
+```{r}
+data_hills$stagione <- factor(data_hills$stagione)
+
+plot(mod2s$residuals~data_hills$stagione,xlab="Stagioni",ylab="Residui",col=rainbow(4))
+```
+######Fig 2.20) Analisi dei residui in funzione della stagione
+
+
+
+
+
+```{r}
+
+require(xtable)
+
+tab2<-xtable(a)#modello 1
+tab3<-xtable(b)#modello 2
+tab4<-xtable(c)# modello 2s<---quello scelt
+
+AICt<-c(2340.035,2077.992,2075.042)
+variabili<-c("max~tmp+media+vv+rdz+pgg+umr+prs","media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione","media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione")
+nomemodello<-c("modello1","modello2","modello3")
+
+AICt<-as.factor(AICt)
+nomemodello<-as.factor(nomemodello)
+variabili<-as.factor(variabili)
+# non riesco a creare una fottutissima tabella in cui mettere 
+# ste 4 cazzate in modo che ci sia la tabella dei modelli e quello che abbiamo scelto
+
+```
 
 
 
@@ -381,29 +469,25 @@ data_hills$normaL<-ifelse(data_hills$media<50.000,"low","high")
 
 data_hills$normaL<-as.factor(data_hills$normaL)
 
-plot(data_hills$media~data_hills$normaL)
 
-
-# vorrei fare la stessa cosa che hai fatto qui con la norma di 
-# legge.... però non ci riesco 
-
-pm10$data2 <- seq(1,365,1)
-
-
-ggplot(pm10, aes(x = data2)) +
-  geom_path(aes(y = media), color = "red") +
-  geom_path(aes(y = mediana), color = "blue") +
-  geom_path(aes(y = max), color = "green")
-
-
-
-
+#pure qui sta norma di legge l'ho dovuta accannare
+# non sono riuscita a trovare ne dati, ne crearli finti per
+# la cosa della stima ma amen ne faremo  a meno
 
 ```
 
 
 
-# GAM
+##### 2.3.2) GAM(generalised additive modelling)
+
+I GAM sono  modelli lineari generalizzati che utilizzano una distribuzione non lineare, la variabile risposta è spiegata tramite una relazione non gaussiana e  la relazione (link) tra variabile risposta e variabile esplicativa può essere diversa.
+Il modello mette in relazione una variabile indipendente,Y con delle variabili dipendenti xi.La variabile indipendete è associata ad una famiglia di distribuzione esponenziale( distribuzione normale,binomiale o di Poisson) attraverso una funzione link g, mettendo in relazione il valore aspettato per Y con le variabili dipendenti attraverso una struttura del tipo:
+g(E(Y))=\beta o +f1(x1)...+fp(xp)
+dove f1 è una funzione che può essere in forma parametrica (es.polinomiale) o non parametrica/ semi-parametrica o funzione di smooth. 
+
+Sono stati stimati dei GAM per comprendere se la relazione tra concentrazione media di Pm10 e le varibili ambientali potesse essere spiegata da questi. Dall'output del modello (Tabella 4) risultano essere significative le variabili giorno,umidità,temperatura e velocità del vento.Il modello presenta un r2 di 0.85 e spiega l'86.5% della devianza. 
+Dall'analisi dei residui (Fig 2.22) risultano essere normali, indipendenti e omoschedastici.
+
 
 ```{r}
 library(mgcv)
@@ -412,79 +496,86 @@ require(mgcv)
 data_hills<-(pm10_a[1:10])
 data_hills$stagione<-pm10_a$Stagione
 names(data_hills)
+summary(data_hills)
 
-g<-gam(media~ s(umr)+s(tmp)+s(pgg)+s(rdz)+s(vv)+s(prs),data=data_hills)
-summary(g)
-plot(g)
+hist(log(data_hills$pgg+1))
+data_hills$l.pgg <- log(data_hills$pgg + 1)
 
+data_hills$day <- seq(1,365,1)
 
-gam.check(g)
-g2<-predict(g,se=TRUE)
+g<-gam(media ~ max + s(day) + s(umr) + s(tmp) + s(pgg) + s(rdz) + s(vv) + s(prs) + dv, data=data_hills) # meglio questo
 
-# QUESTO SOPRA è QUELLO VERO GLI ALTRI SOTTO PER CAZZARARE
-data_media<-data_pca[,-2]
-data_scaled<-scale(data_media)
+library(broom)
 
-data_scaled<-as.data.frame(data_scaled)
-modscale<-lm(media~tmp+max+vv+rdz+pgg+umr+prs,data=data_scaled)
-plot(modscale)
-summary(modscale)
-AIC(modscale)
-
-a<-gam(max~s(pgg,by=vv),data=data_media)
-plot(a,pages=1)
-summary(a)
-
-
-b<-gam(max ~ s(tmp,by=vv),data=data_media)
-plot(b,pages=1)
-summary(b)
-
-
-c<-gam(media~ s(tmp,by=rdz),data=data_media)
-plot(c,page=1)
-summary(c)
-
-
-d<-gam(media~s(tmp,by=vv),data=data_scaled)
-plot(d,page=1)
-summary(d)
-
-
-e<-gam(media~s(umr,by=pgg),data=data_scaled)
-plot(e,page=1)
-summary(e)
-
-
-
-f<-gam(media~s(umr,by=stagione),data=data_hills)
-summary(f)
-plot(f)
-
-
+tidy(g)
 
 ```
+###### Tabella 4)Output GAM
+```{r}
+plot(g)
+
+```
+###### Fig2.21)Grafici dei GAM
+
+```{r}
+acf(g$residuals)
+
+gam.check(g)
+g2<-predict(g,se=TRUE, type = "response")
+```
+######Fig 2.22) Analisi dei residui del Gam
 
 
-# PIOGGIA
 
 
 ```{r}
-boxplot(data_pca$pgg)
-plot(data_pca$pgg,type="l")
-pgg_l<-data_hills$pgg_l<-log(data_pca$pgg-1)
+
+plotdata <- plot(g, pages = 1)
+str(plotdata)
+
+# Convert it in a dataframe
+dati_plot <- data.frame(day = plotdata[[1]]$x, fit = plotdata[[1]]$fit,
+                        se= plotdata[[1]]$se)
+
+plot(dati_plot$day, dati_plot$fit)
+
+dati_plot$day <- as.integer(dati_plot$day)
+
+# Calculate the CI
+dati_plot$upr <- dati_plot$fit + (1.96 * dati_plot$se)
+dati_plot$lwr <- dati_plot$fit - (1.96 * dati_plot$se)
+
+data_hills2 <- merge(dati_plot, data_hills, by = "day", all.y = TRUE)
+
+ggplot(data_hills2, aes(x = day, y = fit)) +
+  geom_hline(aes(yintercept = 0), linetype = 6, color = "red") +
+  geom_smooth(aes(ymin = lwr, ymax = upr), fill = "gray80", color = "black", size = 1, stat = "identity")
+
+data_hills2$fit2 <- g2$fit
+data_hills2$se2 <- g2$se.fit
+
+data_hills2$upr2 <- data_hills2$fit2 + (1.96 * data_hills2$se2)
+data_hills2$lwr2 <- data_hills2$fit2 - (1.96 * data_hills2$se2)
 
 
-str(pgg_l)
+ggplot(data_hills2, aes(x = day)) +
+  geom_point(aes(y = fit2), color = "black") + 
+  geom_line(aes(y = fit2), color = "black", linetype = "twodash") + 
+  geom_point(aes(y = media), color = "red") +
+  geom_line(aes(y = media), color = "red", linetype = "solid") +
+  geom_errorbar(aes(ymin = lwr2, ymax = upr2), width = .2, color = "grey40")
 
 
-plot(data_hills$max,data_hills$pgg,type="l")
-plot(data_hills$max,data_hills$pgg_l,type="l")
 
+
+# tutto questo non so come commentarlo ne ho capito cosa hai fatto...c'ho provato ma non c'ho tempo :( 
 ```
 
 
 
+###3) Conclusione
+
+L'obiettivo dell'analisi era quello di comprendere le relazioni che intercorrono tra la concentrazione di Pm10 e le variabili ambientali a Taranto e capire quanto le variabili ambientali ne influenzino la concentrazione. Dall'analisi  è emerso che è presente un fattore stagionale nella concentrazione del pm10, in inverno la concentrazione del Pm10 presenta dei valori anomali superiori alla media dovuti probabilmente alla maggiore produzione di Pm10 a causa  del riscaldamento delle abitazione e all'utilizzo delle automobili più intenso rispetto alle altre stagioni.Anche in estate vi sono dei valori anomali con  concentrazioni elevate di Pm10, questo è attribuibile  all'assenza delle piogge,le elevate temperature e per la presenza del vento caldo che spira da Sudest. Dalla stima del modello di regressione lineare sono risultate essere significative le variabili massima, velocità del vento, direzione del vento e in minor misura umidità e stagione invernale.Anche  la stima del GAM ha confermato la significatività delle variabili velocità del vento ed umidità con l'aggiunta della temperatura.In linea generale i modelli stimati hanno quindi evidenziato l'importanza delle variabili velocità del vento, che tende a disperdere il Pm10 maggiormente e quindi in relazione a concentrazioni minori di Pm10, direzione del vento sempre in relazione alla velocità e da dove spira il vento (da mare o da terra), temperatura ed umidità che determinano minor dispersione del Pm10 e livelli più alti nelle concentrazioni.Sebbene la  variabili ambientali sembrerebbero essere implicate, nella presenza di diversi livelli di  concentrazione di Pm10 è importante tenere in considerazione la zona dove sono collocate le centraline (sarebbero necessari dei dati georeferenziati) in relazione alla zona industriale dell'Ilva in continua attività, presente a Taranto.
 
 
 
@@ -497,7 +588,8 @@ plot(data_hills$max,data_hills$pgg_l,type="l")
 
 
 
-#5) Bibliografia
+###4) Bibliografia
+
 
 
 •	Brunekreef B, S.T. Holgate (2002) Air pollution and health. Lancet 360. 
