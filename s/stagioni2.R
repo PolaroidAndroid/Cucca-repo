@@ -36,7 +36,7 @@ getSeason <- function(DATES) {
 
 k <- getSeason(pm10$data)
 
-
+str(pm10_a)
 
 pm10_a$Stagione<- k
 
@@ -46,17 +46,64 @@ table(pm10_a$Stagione)
 
 summary(pm10_a)
 
-#boxplot
+
+# Analisi esplorativa----
+
+
+#   Colori----
+#un modo carino per selezionare i colori
+color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+
+# questo comando crea un oggetto che si chiama color che contiene tutti e 433 i colori base di R escluse le scale di grigio
+# poi basta fare col = sample(color, n) all'intero di una funzione che usa come argument col
+# dove n è il numero di colori che devi utilizzare
+
+#alternativa se 433 colori sono troppi
+library(RColorBrewer)
+qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+# questa funzione produce un vettore di 74 colori
+
+# boxplot----
+data_hills<-(pm10_a[,1:10])
+data_hills$stagione<-pm10_a$Stagione
 
 
 boxplot(data_hills$media~data_hills$stagione,col=col_vector,main="Concentrazioni medie di Pm10")
 boxplot(data_hills$max~data_hills$stagione,col=col_vector, main="Concentrazioni massime di Pm10 ")
 
-plot(data_hills$dv,data_hills$media,xlab="Direzione del vento",ylab="Concentrazione Pm10", col=col_vector)
 
+plot(data_hills$dv,data_hills$media, main=" Boxplot concentazione Pm10 e direzione del vento",ylab="Concentrazione media di Pm10", col=col_vector)
 
 # grafico a coppie
 
+panel.hist <- function(x, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(usr[1:2], 0, 1.5) )
+  h <- hist(x, plot = FALSE)
+  breaks <- h$breaks; nB <- length(breaks)
+  y <- h$counts; y <- y/max(y)
+  rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+
+# questo è per la correlazione
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- abs(cor(x, y))
+  txt <- format(c(r, 0.123456789), digits = digits)[1]
+  txt <- paste0(prefix, txt)
+  if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+
+
+
+
+
+data_pca <- pm10_a[,c(1:9)]
 pairs(data_pca,upper.panel =panel.smooth,lower.panel=panel.cor,diag.panel = panel.hist)
 
 
@@ -65,20 +112,22 @@ require(ade4)
 names(pm10_a)
 
 #estraggo da pm10 solo le variabili numeriche da inserire nella PCA escludendo giorno mese e anno che sono da considerarsi factors
-data_pca <- pm10_a[,c(1:9)]
+
 
 # con nf = 3 gli stò dicendo di tenere tre assi
-pcapm <- dudi.pca(data_pca, scannf = FALSE, nf = 3)
+pcapm.cov <- dudi.pca(data_pca,scale=FALSE, scannf = FALSE, nf = 3)
+
+pcapm.cor <- dudi.pca(data_pca, scale= TRUE,scannf = FALSE, nf = 3)
 
 #faccio il biplot, cos'è clab.row?
 # clab.row serve a gestire la grandezza dei quadratini delle osservazioni
 # clab.col invece controlla le variabili
-scatter(pcapm, clab.row = 0.5)
-
+scatter(pcapm.cov, clab.row = 0.5)
+scatter(pcapm.cor,clab.row = 0.5)
 
 #valori dei punteggi per le variabili
-pcapm$c1
-
+pcapm.cor$c1
+pcapm.cov$c1
 # CARATTERIZZIAMO GLI ASSI
 # se vedi come ci si aspetta mediana media e max stanno insieme perchè sono molto correlati e vanno tutti sulla prima componente
 # sulla seconda ci vanno i fattori ambientali tmp, umr, rdz, pgg e prs. Solo che tmp, prs e rdz hanno correlazione negativa rispetto
@@ -113,22 +162,10 @@ s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2, col = c(1,2,3,4))
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3, col = c(1,2,3,4))
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = c(1,2,3,4))
 
-
-
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = rainbow(4)) #se volessi usare la funzione rainbow
 
-#un modo carino per selezionare i colori
-color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
 
-# questo comando crea un oggetto che si chiama color che contiene tutti e 433 i colori base di R escluse le scale di grigio
-# poi basta fare col = sample(color, n) all'intero di una funzione che usa come argument col
-# dove n è il numero di colori che devi utilizzare
 
-#alternativa se 433 colori sono troppi
-library(RColorBrewer)
-qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
-# questa funzione produce un vettore di 74 colori
 
 # Interpretazione (la devi fare tu), stai attenta! :
 # 1 - come si dispongono le ellissi rispetto alle tre componenti? 
@@ -194,8 +231,6 @@ s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = rainbow(nlevels(pm1
 
 # fatti le stesse domande che ti ho scritto prima
 
-
-# HILL-SMITH ----
 
 
 
@@ -272,45 +307,39 @@ summary(corr)
 
 mod1<-lm(media~.,data=data_hills)
 summary(mod1)
-par(mfrow=c(2,2))
 plot(mod1)
-par(mfrow=c(1,1))
 qqnorm(mod1$residuals)
 qqline(mod1$residuals,col=2)
 
 
 mod1s=step(mod1,direction="both")
 summary(mod1s)
-par(mfrow=c(2,2))
 plot(mod1s)
 
+<<<<<<< HEAD
 # mod 2 media+massima
+
+
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 summary(mod2)
 # l'r2 sembra buono qui 0.83
+
+par(mfrow=c(1,1))
 par(mfrow = c(2,2))
+
 plot(mod2)
-<<<<<<< HEAD
 
 # mi sembra che ci siano dei valori anomali, 48 334 e 50 
-=======
-# mi sembra che ci siano dei valori anomali, 48 334 e 50 <- LUI IN AUTOMATICO SI SEGNALA I TRE VALORI PIU' ESTREMI 
-# NON E' DETTO CHE SIANO VALORI ANOMALI
->>>>>>> 959ce166c4ec6fd51cee92e76b6da1bcb949985e
 # per  residual vs fitted: la nuvola c'è  ed è abbastanza compatta e non proprio del tutto centrata e c'è una 
 # lieve nello smooth ...che dovrebbe essere al centro, andando così in alto mi fa pensare a qualcosa di logaritmico
-# SEMBREREBBE ESSERCI UNA LEGGERA ETEROSCHEDASTICITA'. MA PER QUELLO CHE DOVETE FARE VOI VA BENE. AVENDO DELLE VARAIBILI FATTORIALI
-# PLOTTA ANCHE I RESIDUI vs VARAIBILE FATTORIALE (vento e stagione)
 # magari sto a di una cazzata magari no...è la pioggia?)
 # nel normal q-q sembrano nomarli sempre eccetto quei due tre valori anomali
-# MAGARI AVERE DEI RESIDUI COSi' NORMALI
 # negli standardizzati/fitted c'è sempre una bella nuvola ma c'è sempre questa 
 # retta che sembra un logaritmo..quindi direi che non sono omoschedastici, altrimenti dovrebbe essere
 # dritta la retta 
-# SE VUOI VEDERE LA DISTANZA DI COOK FAI plot(mod1, which = 4)
 # nella leverage è palese che i valori sono oltre la distanza di cook quindi qualcosa mi influenza il tutto
 # mi viene da dire che nemmeno questo va bene 
-par(mfrow=c(1,1))
+=======
 
   
 ####modelli che non usiamo ----
@@ -352,8 +381,14 @@ summary(mod2)
 
 mod2s=step(mod2,direction="both")
 summary(mod2s)
-par(mfrow=c(2,2))
 plot(mod2s)
+
+
+#Vendono chiaramente significative e ti alzano l'R^2 producendo un overfit
+#L'autunno non è sparito ma è finito nell'intercetta come "corner point". Se inserisci una variabile "Dummy" (Qualitativa) in un modello R sceglie automaticamente i primo livello in ordine alpha numerico come corner point. Vuol dire che stai confrontando la variazione dei pm10 in autunno rispetto alle altre variabili e stagioni.
+
+
+#L'AIC è un criterio di verosimiglianza che serve a confrontare modelli tra loro. Non importa se sia alto o basso, quello dipende dalla quantità di variabilità presente nel modello. Tu devi "teoricamente" ricercare il modello che abbia l'AIC più basso possibile ma sempre confrontandolo con gli altri modelli che hai fatto. E' esattamente ciò che fa la stepwise.
 
 
 qqnorm(mod2s$residuals)
@@ -367,11 +402,18 @@ acf(mod2s$residuals)
 cor(data_hills[,c(1:9)])
 
 
-#direi che questo è il modello migliore. Se ti va provati a vedere come funzionao i gam. T
-# pacchetto mgcv 
-# che cosa vedi in questo modello???
-# che ti dice l'output???
 
+#### faccio tabelle più o meno ----
+library(broom)
+
+tidy(mod2)
+head(augment(mod2))
+glance(mod2)
+
+
+tidy(mod2s)
+head(augment(mod2s))
+glance(mod2s)
 
 
 #STANDARDIZZO LE VARIABILI ----
@@ -384,6 +426,8 @@ modscale<-lm(media~tmp+max+vv+rdz+pgg+umr+prs,data=data_scaled)
 plot(modscale)
 summary(modscale)
 AIC(modscale)
+
+
 # TEST SU RESIDUI ----
 library(nortest)
 ad.test(modscale$residuals)
@@ -434,7 +478,7 @@ summary(e)
 f<-gam(media~s(umr,by=stagione),data=data_hills)
 summary(f)
 plot(f)
-par(nfrow=(2,2))
+
 
 gamp<-gam(max~s(pgg,by=stagione),data=data_hills)
 summary(gamp)
@@ -494,7 +538,7 @@ ggplot(pm10, aes(x = data2)) +
   geom_path(aes(y = mediana), color = "blue") +
   geom_path(aes(y = max), color = "green")
 
-#NON TROVO LA PARTE CON I GAM
+
 
 
 

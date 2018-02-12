@@ -12,8 +12,9 @@ output: word_document
 ### Indice
 
 1)Introduzione
+
 1.1 Il particolato atmosferico 
-1.2 Origine 
+1.2 Origine
 1.3 Effetti sulla salute umana 
 1.4 Legislazione
 1.5 Obiettivi della ricerca
@@ -72,7 +73,7 @@ Le variabili sono: Media(valore medio giornaliero), Mediana (valore mediano gior
 Per visualizzare graficamente il comportamento dei dati è stata condotta un'analisi esplorativa degli stessi.Sono stati disegnati dei diagrammi, dei grafici di dispersione a coppie, dei boxplot ed è stata condotta l'analisi delle componenti principali (ACP  o PCA).
 
 
-```{r}
+```{r, include=FALSE}
 #setto la WD ----
 pm10 <- read.csv2("data/pm2010.csv", dec = ".")
 
@@ -114,7 +115,7 @@ k <- getSeason(pm10$data)
 pm10_a$Stagione<- k
 
 ```
-```{r}
+```{r include=FALSE}
 
 data_hills<-(pm10_a[1:10])
 data_hills$stagione<-pm10_a$Stagione
@@ -124,7 +125,7 @@ data_hills$stagione<-pm10_a$Stagione
 
 
 
-```{r}
+```{r include= FALSE}
 #un modo carino per selezionare i colori
 color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
 
@@ -143,7 +144,7 @@ col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_co
 
 Il diagramma o serie storica delle concentrazioni di Pm10 (Fig 1) è stato disegnato mantenendo in ascissa il tempo espresso in giorni ed in ordinata le concentrazioni medie, massime e mediane di pm10 .Questo ha mostrato un'andamento periodico per le tre variabili che,per media e mediana risulta essere il medesimo, mentre per la massima presenta dei picchi di maggiore intensità rispetto a le due. 
 
-```{r}
+```{r include=FALSE}
 library(ggplot2)
 pm10$data2 <- seq(1,365,1)
 
@@ -164,25 +165,25 @@ I Boxplot, "grafici a baffi e scatole ", sono stati utili per mostrare in modo c
 
 
 
-```{r}
+```{r include= FALSE}
 
 boxplot(data_hills$media~data_hills$stagione,col=col_vector,main="Concentrazioni medie di Pm10")
 
 ```
 ###### Fig 2)Boxplot delle concentrazioni medie di Pm10 durante le stagioni nell'anno 2009 a Taranto.
-```{r}
+```{r include=FALSE}
 
 
 boxplot(pm10_a$media~pm10_a$mese2,col=col_vector,main="Concentrazioni medie di Pm10 nei Mesi (aa.2009) ")
 ```
 ###### Fig 2.1)Boxplot delle concentrazioni medie di Pm10 durante i mesi dell'anno 2009 a Taranto
-```{r}
+```{r include=FALSE}
 boxplot(data_hills$max~data_hills$stagione,col=col_vector, main="Concentrazioni massime di Pm10 ")
 
 ```
 ###### Fig2.2)Boxplot delle concentrazioni massime di Pm10 durante le stagioni dell' anno 2009 a Taranto
 
-```{r}
+```{r include=FALSE}
 plot(data_hills$dv,data_hills$media, main=" Concentazioni di Pm10 in relazione alla direzione del vento",ylab="Concentrazione media di Pm10", col=col_vector)
 
 ```
@@ -195,7 +196,7 @@ Dall'osservazione dei Boxplot sulla concentrazione media di Pm10 in relazione al
 
 ##### Grafico di dispersione a coppie
 Il grafico a coppie o matrice di dispersione (scatter plot matrice), è la rappresentazione grafica per lo studio delle rappresentazioni numeriche bivariate. Grazie al grafico abbiamo una visualizzazione complessiva delle variabili ambientali. Nel grafico avremo in diagonale gli isogrammi, al di sotto dei quali abbiamo il coefficiente di correlazione di Pearson (r(Xi,xj)=Cov(X,Xj)/\log Var(Xi)Var(Xj)), e al di sopra i grafici a dispersione con le curve di regressione in rosso.
-```{r}
+```{r include=FALSE}
 panel.hist <- function(x, ...)
 {
   usr <- par("usr"); on.exit(par(usr))
@@ -220,7 +221,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 }
 ```
 
-```{r}
+```{r include=FALSE}
 data_pca <- pm10_a[,c(1:9)]
 pairs(data_pca,upper.panel =panel.smooth,lower.panel=panel.cor,diag.panel = panel.hist)
 ```
@@ -228,7 +229,7 @@ pairs(data_pca,upper.panel =panel.smooth,lower.panel=panel.cor,diag.panel = pane
 
 
 ##### Analisi delle componenti principali (ACP o PCA)
-```{r}
+```{r include=FALSE}
 ### PCA ANALYSIS ----
 require(ade4)
 
@@ -250,14 +251,14 @@ scatter(pcapm, clab.row = 0.5)
 basata sulla matrice di correlazione.
 
 
-```{r}
+```{r include = FALSE}
 library(broom)
 pcapm$c1
 
 ```
 ###### Tabella 1) Punteggi delle variabili sui tre assi principali
 
-```{r}
+```{r include=FALSE}
 #calcolo gli autovalori
 pcapm$eig / sum(pcapm$eig) 
 
@@ -270,18 +271,18 @@ Attraverso l'analisi delle componenti principali(ACP o PCA,Principal component a
 L’analisi in componenti principali (PCA) ha come scopo primario la riduzione di un numero più o meno elevato di variabili (rappresentanti le caratteristiche del fenomeno analizzato) in alcune variabili latenti, dette componenti principali. Queste identificano i pattern di variabilità rilevanti nell’insieme dei dati disponibili. Solitamente, infatti, si ha a che fare con insiemi di dati altamente multivariati; per poter rappresentare graficamente questi dati conservando il massimo dell’informazione si rende necessario riportare le variabili in uno spazio di 2 o 3 dimensioni, in questo caso sono stati scelti 3 assi.
 Nell'analisi in componenti principali si è preferito tenere in considerazione le sole variabili quantitative, per poter visualizzare in maniera chiara la distribuzione dell'informazione presente nel dataset. Dall' osservazione del biplot (Fig 2.5) e la lettura dei punteggi (Tabella 1) è stato possibile individuare il contributo di ciascuna variabile agli assi. Attraverso la somma cumulata degli autovalori, è stato possibile calcolare la percentuale di informazione spiegata dalle componenti.Le 3 componenti principali spiegano il 71% dell' informazione presente nel dataset; sono stati poi caratterizzati gli assi ( Fig 2.6-2.7-2.8).Grazie al biplot ed ai punteggi comprendiamo quali variabili danno maggior contributo agli assi: le concentrazioni di Pm10 (massime, medie e mediane) per il primo asse, le variabili ambientali temperatura, pressione e radiazione solare con correlazione negativa rispetto all'umidità, per il secondo asse (la pioggia sembra essere al litime con un punteggio abbastanza basso) la velocità del vento per il terzo asse.
 
-```{r}
+```{r include=FALSE}
 #cerchio di correlazione, i punteggi delle varibili sono plottati su una circonferenza di raggio unitario
 s.corcircle(pcapm$c1, xax = 1, yax = 2) #plotto prima e seconda
 ```
 ###### Fig 2.6)Cerchio di correlazione primo e secondo asse principali
-```{r}
+```{r include =FALSE}
 s.corcircle(pcapm$c1, xax = 1, yax = 3) #plotto prima e terza
 
 ```
 ###### Fig 2.7) Cerchio di correlazione primo e terzo asse principali
 
-```{r}
+```{r include=FALSE}
 s.corcircle(pcapm$c1, xax = 2, yax = 3) #plotto seconda e terza
 ```
 ###### Fig 2.8) Cerchio di correlazione secondo e terzo asse 
@@ -295,17 +296,17 @@ La primavera è praticamente un cerchio il cui centro combacia con il centro del
 Se ne deduce che il fattore stagionale in termini di concentrazione di pm10 e fattori ambientali è piuttosto evidente.
 
 
-```{r}
+```{r include=FALSE}
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 2, col = c(1,2,3,4)) 
 
 ```
 ###### Fig 2.9)Cerchio di correlazione primo e secondo asse in relazione alla stagione
 
-```{r}
+```{r include=FALSE}
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 1, yax = 3, col = c(1,2,3,4))
 ```
 ###### Fig 2.10) Cerchio di correlazione primo e terzo asse in relazione alla stagione
-```{r}
+```{r include=FALSE}
 s.class(pcapm$li, factor(pm10_a$Stagione), xax = 2, yax = 3, col = c(1,2,3,4))
 ```
 ###### Fig 2.11) Cerchio di correlazione secondo e terzo asse in relazione alla stagione
@@ -314,19 +315,19 @@ Per quanto rigarda il fattore direzione del vento (espresso secondo la rosa dei 
 
 
 
-```{r}
+```{r include=FALSE}
 #DIREZIONE DEL VENTO ----
 s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 2, col = rainbow(nlevels(pm10$dv)),clabel = .8)
 
 ```
 ###### Fig 2.13)Cerchio correlazione primo e secondo asse in relazione alla direzione del vento  
 
-```{r}
+```{r include=FALSE}
 s.class(pcapm$li, factor(pm10_a$dv), xax = 1, yax = 3, col = rainbow(nlevels(pm10$dv)))
 
 ```
 ###### Fig 2.14) Cerchio di correlazione primo e terzo asse in relazione alla direzione del vento
-```{r}
+```{r include=FALSE}
 s.class(pcapm$li, factor(pm10_a$dv), xax = 2, yax = 3, col = rainbow(nlevels(pm10$dv)))
 ```
 ###### Fig 2.15) Cerchio di correlazione secondo e terzo asse in relazione alla direzione del vento 
@@ -366,7 +367,7 @@ Inoltre i residui sono stati disegnati in funzione della stagione e della direzi
 
  
 
-```{r}
+```{r include=FALSE}
 mod2<-lm(media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione,data=data_hills)
 summary(mod2)
 b<-summary(mod2)
@@ -382,7 +383,7 @@ summary(mod2s)
 c<-summary(mod2s)
 ```
 
-```{r}
+```{r include=FALSE}
 library(broom)
 
 tidy(mod2s)
@@ -395,20 +396,20 @@ glance(mod2s)
 
 
 
-```{r}
+```{r include=FALSE}
 plot(mod2s)
 
 ```
 
 
 ###### Fig 2.16) Analisi dei residui del modello
-```{r}
+```{r include=FALSE}
 plot(mod2s$residuals,ylab="Residui del modello")
 c<-summary(mod2s)
 
 ```
 ######Fig 2.17)Analisi grafica dei residui
-```{r}
+```{r include=FALSE}
 acf(mod2s$residuals)
 ```
 ###### Fig 2.18) Analisi di autocorrelazione
@@ -417,13 +418,13 @@ acf(mod2s$residuals)
 
 
 
-```{r}
+```{r include=FALSE}
 plot(mod2s$residuals~data_hills$dv,xlab="Direzione del vento",ylab = "Residui", col=rainbow(8))
 
 ```
 
 ###### Fig 2.19)Analisi dei residui in funzione della direzione del vento
-```{r}
+```{r include=FALSE}
 data_hills$stagione <- factor(data_hills$stagione)
 
 plot(mod2s$residuals~data_hills$stagione,xlab="Stagioni",ylab="Residui",col=rainbow(4))
@@ -434,7 +435,7 @@ plot(mod2s$residuals~data_hills$stagione,xlab="Stagioni",ylab="Residui",col=rain
 
 
 
-```{r}
+```{r include=FALSE}
 
 require(xtable)
 
@@ -460,7 +461,7 @@ variabili<-as.factor(variabili)
 
 
 
-```{r}
+```{r include=FALSE}
 
 
 # medie e norma di legge ----
@@ -489,7 +490,7 @@ Sono stati stimati dei GAM per comprendere se la relazione tra concentrazione me
 Dall'analisi dei residui (Fig 2.22) risultano essere normali, indipendenti e omoschedastici.
 
 
-```{r}
+```{r include=FALSE}
 library(mgcv)
 
 require(mgcv)
@@ -511,13 +512,13 @@ tidy(g)
 
 ```
 ###### Tabella 4)Output GAM
-```{r}
+```{r include=FALSE}
 plot(g)
 
 ```
 ###### Fig2.21)Grafici dei GAM
 
-```{r}
+```{r include=FALSE}
 acf(g$residuals)
 
 gam.check(g)
@@ -528,7 +529,7 @@ g2<-predict(g,se=TRUE, type = "response")
 
 
 
-```{r}
+```{r include=FALSE}
 
 plotdata <- plot(g, pages = 1)
 str(plotdata)
@@ -598,6 +599,7 @@ L'obiettivo dell'analisi era quello di comprendere le relazioni che intercorrono
 
 •	Marconi A., 2003. Materiale particellare aerodisperso: definizioni, effetti sanitari, misura e sintesi delle indagini ambientali effettuate a Roma, Annali dell’Istituto Superiore di Sanità, 39(3): 329-342. 
 
+•
 
 
 

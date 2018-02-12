@@ -1,0 +1,4 @@
+﻿Nome modello;Variabili ambientali;AIC
+modello 1;max~tmp+media+vv+rdz+pgg+umr+prs;2340,035
+modello 2;media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione;2077,992
+modello 3;media~tmp+max+vv+dv+rdz+pgg+umr+prs+stagione;2075,042
