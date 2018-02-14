@@ -43,10 +43,6 @@ pm10_a$Stagione<- k
 table(pm10_a$Stagione)
 
 
-
-summary(pm10_a)
-
-
 # Analisi esplorativa----
 
 
@@ -316,7 +312,7 @@ mod1s=step(mod1,direction="both")
 summary(mod1s)
 plot(mod1s)
 
-<<<<<<< HEAD
+
 # mod 2 media+massima
 
 
@@ -339,7 +335,7 @@ plot(mod2)
 # dritta la retta 
 # nella leverage è palese che i valori sono oltre la distanza di cook quindi qualcosa mi influenza il tutto
 # mi viene da dire che nemmeno questo va bene 
-=======
+
 
   
 ####modelli che non usiamo ----
@@ -544,3 +540,48 @@ ggplot(pm10, aes(x = data2)) +
 
 plot()
 cor(data_pca)
+
+
+
+# PROVE STE
+
+summary(pm10_a)
+pm10_a$Stagione <- factor(pm10_a$Stagione)
+pm10_a$mese<- factor(pm10_a$mese)
+
+m1 <- lm(max ~ Stagione, data = pm10_a)
+summary(m1)
+m3 <- lm(max ~ mese, data = pm10_a)
+summary(m3)
+
+table(pm10_a$dv)
+m4 <- lm(media ~ dv, data = pm10_a)
+m5 <- lm(max ~ dv, data = pm10_a)
+summary(m4); summary(m5)
+
+dv2 <- relevel(pm10_a$dv, ref = "SE")
+m6 <- lm(media ~ dv2, data = pm10_a)
+summary(m6)
+
+pm10_a$day <- seq(1,365,1)
+
+lm1 <- lm(media ~ day + max + vv + prs + umr + rdz + prs + tmp + pgg, data = pm10_a)
+summary(lm1)
+lm2 <- step(lm1)
+summary(lm2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
